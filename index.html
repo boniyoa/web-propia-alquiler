@@ -83,7 +83,7 @@
                             <span id="carrito-total" class="ml-2 text-xs text-blue-700 font-bold">€0.00</span>
                         </button>
                         <!-- Carrito desplegable -->
-                        <div id="carrito-dropdown" class="absolute right-0 mt-2 w-[90vw] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl bg-white shadow-2xl rounded-xl border border-gray-200 z-50 hidden">
+                        <div id="carrito-dropdown" class="absolute right-0 mt-2 w-[25vw] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl bg-white shadow-2xl rounded-xl border border-gray-200 z-50 hidden">
                             <div class="p-4 max-h-[60vh] overflow-y-auto">
                                 <h4 class="font-bold mb-2 text-lg">Carrito</h4>
                                 <ul id="carrito-list" class="mb-2 text-sm"></ul>
@@ -870,7 +870,7 @@ function actualizarCarrito() {
         li.className = "flex flex-col mb-1 border-b pb-1 px-1";
         li.innerHTML = `
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-                <span>${item.unidades} unidad${item.unidades>1?'es':''} de ${item.nombre} (${item.dias} día${item.dias>1?'s':''}) - €${(item.precio*item.unidades*item.dias).toFixed(2)}</span>
+                <span><strong>${item.unidades} unidad${item.unidades>1?'es':''}</strong> de ${item.nombre} <strong>(${item.dias} día${item.dias>1?'s':''})</strong> -<em> €${(item.precio*item.unidades*item.dias).toFixed(2)}</em></span>
                 <div class="flex items-center">
                     <button class="ml-2 text-blue-500 hover:text-blue-700 px-2 py-0.5 rounded" data-editar="${idx}" title="Editar">
                         <i class="fas fa-edit"></i>
