@@ -1,0 +1,328 @@
+@font-face {
+  font-family: "QaskinBlack";
+  src: url("./modelos/qaskin/QaskinBlack_PersonalUse.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "QaskinWhite";
+  src: url("./modelos/qaskin/QaskinWhite_PersonalUse.ttf") format("truetype");
+}
+
+@keyframes zoomOut {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+h1 {
+  font-family: "QaskinWhite", sans-serif;
+  animation: zoomOut 0.8s ease-out;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0c0cbc; /* Equivalent to bg-gray-100 */
+  color: #191f27; /* Equivalent to text-gray-900 */
+}
+/* Barra superior fija */
+.barra-superior {
+  position: fixed; /* Fija la barra en la parte superior */
+  top: 0; /* Alineada al borde superior */
+  left: 0; /* Alineada al borde izquierdo */
+  width: 100%; /* Ocupa el 100% del ancho */
+  background-color: transparent; /* Fondo transparente */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  padding: 0.5rem 1rem; /* Espaciado interno */
+  display: flex; /* Flexbox para alinear los botones */
+  justify-content: space-between; /* Espaciado entre los botones */
+}
+
+/* Botón de contacto dentro de la barra */
+.contact-box {
+  display: flex;
+  align-items: center;
+ 
+}
+
+
+
+header {
+  background-attachment: fixed;
+  background-image: url("./modelos/c802-virginia-benedettojpg.webp");
+
+  background-position: bottom bottom;
+  background-size: cover;
+  background-color: #1407a342; /* Equivalent to bg-gray-800 */
+  color: #ffffff; /* Equivalent to text-white */
+  padding-top: 1.5rem; /* Equivalent to py-6 */
+  padding-bottom: 1rem; /* Equivalent to py-6 */
+}
+.h1 {
+  font-size: 80px; /* Equivalent to text-4xl */
+  font-weight: bold; /* Equivalent to font-bold */
+  text-align: center; /* Equivalent to text-center */
+  color: #ffffff; /* Equivalent to text-white */
+}
+
+.btn-contact:hover {
+  background-color: #2563eb; /* Color de fondo al pasar el cursor */
+  transform: scale(1.05); /* Efecto de agrandamiento */
+}
+
+.btn-contact i {
+  margin-right: 0.5rem; /* Espaciado entre el ícono y el texto */
+  font-size: 1.2rem; /* Tamaño del ícono */
+}
+
+
+
+.fade {
+  opacity: 1;
+  transition: all 0.5s ease-out; /* medio segundo de transición */
+}
+.fade-out {
+  opacity: 0; /* Hace que la imagen desaparezca */
+}
+/* Estilo para la opción "Elige tu Pack" */
+select option[value="pagina0"] {
+  font-style: italic; /* Cursiva */
+  font-weight: normal; /* Sin negrita */
+  color: #888; /* Color gris para diferenciar */
+}
+.desplegable {
+  position: relative; /* Necesario para usar z-index */
+  margin-top: 1rem;
+  margin-bottom: 5rem; /* Espaciado inferior para separar del texto */
+  text-align: center; /* Alineado al centro */
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 2; /* Asegura que esté por encima de la foto */
+}
+
+
+/*CONTEIDO DE LA CAJA */
+
+.presentación {
+  position: relative; /* Necesario para posicionar elementos hijos */
+  background-color: rgb(55, 145, 194);
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+  padding: 1rem; /* Reduce el espacio interno */
+  margin: 1rem auto; /* Reduce el margen externo */
+  max-width: 1500px; /* Reduce el ancho máximo */
+  max-height: 1000px; /* Reduce la altura máxima */
+  text-align: left; /* Justifica el contenido a la izquierda */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.presentación h2 {
+  font-family: sans-serif; /* Fuente personalizada */
+  text-align: center; /* Centra el texto */
+  font-weight: bold;
+  font-size: 2rem; /* Tamaño de fuente */
+  color: #ffffff; /* Color blanco */
+  margin-bottom: 1rem; /* Separación inferior */
+}
+#chapa p:first-letter {
+  font-size: 2em; /* Tamaño de la primera letra */
+  font-weight: bold; /* Negrita */
+  color: #1407a3; /* Color diferente para la primera letra */
+}
+#chapa {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  text-align: justify; /* Justifica el texto a la izquierda */
+  margin-bottom: 2rem; /* Espaciado inferior para separar del botón */
+  font-size: 16px;
+}
+#foto {
+  box-sizing: content-box;
+  margin-top: 5rem;
+  width: 50%; /* Ajusta el tamaño según sea necesario */
+  display: block;
+  margin: auto;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1; /* Asegura que la foto esté detrás del desplegable */
+  position: relative; /* Necesario para z-index */
+}
+
+#foto:hover {
+  transform: scale(1.3);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+#descripcion {
+  text-align: center;
+  font-size: 20px; /* Equivalent to text-lg */
+  margin: 20px 0;
+  padding: 0 20px;
+}
+
+#descripcion {
+  text-align: left; /* Justifica el texto a la izquierda */
+  margin-bottom: 2rem; /* Espaciado inferior para separar del botón */
+}
+
+.presentación .btn-cart:hover {
+  background-color: #0e0580;
+}
+
+/* Estilo para el botón "Seleccionar Pack" */
+.boton-seleccion {
+    text-align: center; /* Centra el botón */
+    margin-top: 2rem; /* Espaciado superior */
+}
+
+.btn-seleccionar-pack {
+    display: inline-block;
+    padding: 0.8rem 1.5rem; /* Espaciado interno */
+    font-size: 1rem; /* Tamaño de fuente */
+    font-weight: bold; /* Negrita */
+    color: #ffffff; /* Color del texto */
+    background-color: #0059e9; /* Color de fondo */
+    border: 2px solid #ffffff; /* Borde blanco */
+    border-radius: 5px; /* Bordes redondeados */
+    margin: 0.5rem; /* Margen blanco alrededor del botón */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones suaves */
+}
+
+.btn-seleccionar-pack:hover {
+    background-color: #2563eb; /* Color de fondo al pasar el cursor */
+    transform: scale(1.05); /* Efecto de agrandamiento */
+}
+
+.btn-confirmar {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #3b82f6;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-confirmar:hover {
+  background-color: #2563eb;
+  transform: scale(1.05);
+}
+
+/* Estilo para la ventana emergente (modal) */
+.modal {
+    display: none; /* Oculta el modal por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #ff0000;
+}
+
+#resumen-pedido {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
+    color: #555;
+}
+
+#resumen-pedido li {
+    margin-bottom: 0.5rem;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* Botón de contacto pegado al margen izquierdo */
+#btn-contacto {
+    position: fixed;
+    top: 20px; /* Distancia desde la parte superior */
+    left: 20px; /* Pegado al margen izquierdo */
+    display: inline-block;
+    padding: 0.8rem 1.5rem; /* Espaciado interno */
+    font-size: 1rem; /* Tamaño de fuente */
+    font-weight: bold; /* Negrita */
+    color: #ffffff; /* Color del texto */
+    background-color: #3b82f6; /* Color de fondo */
+    border: white, 30000px; 
+    border-radius: 5px; /* Bordes redondeados */
+
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones suaves */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+.btn-contact i {
+    
+  margin-right: 0.5rem; /* Espaciado entre el ícono y el texto */
+  font-size: 1.2rem; /* Tamaño del ícono */
+}
+/* Botón de pedido pegado al margen derecho */
+
+/* Botón de volver pegado al margen derecho */
+#btn-volver {
+    position: fixed;
+    top: 20px; /* Distancia desde la parte superior */
+    right: 20px; /* Pegado al margen derecho */
+    display: inline-block;
+    padding: 0.8rem 1.5rem; /* Espaciado interno */
+    font-size: 1rem; /* Tamaño de fuente */
+    font-weight: bold; /* Negrita */
+    color: #ffffff; /* Color del texto */
+    background-color: #3b82f6; /* Color de fondo */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones suaves */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    text-decoration: none; /* Quita el subrayado del enlace */
+}
+
+#btn-volver:hover {
+    background-color: #2563eb; /* Color de fondo al pasar el cursor */
+    transform: scale(1.05); /* Efecto de agrandamiento */
+}
+
+/* Efecto hover para ambos botones */
+#btn-contacto:hover,

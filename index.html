@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alquiler Material Audiovisual</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+        </script>
+        <script type="text/javascript">
+        (function(){
+        emailjs.init({
+            publicKey: "vx8L-z5rNQzE-usNx",
+        });
+        })();
+        </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .section {
+            scroll-margin-top: 100px;
+        }
+        .equipment-card {
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .equipment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .equipment-card .p-6 {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .active-section {
+            color: #3b82f6;
+        }
+        .active-section::after {
+            width: 100%;
+        }
+         nav, h1, h2, h3, .nav-link, #buscador-equipos, #carrito-header {
+            font-family: 'DepartureMono', monospace;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <i class="fas fa-film text-3xl text-blue-500 mr-3"></i>
+                    <h1 class="text-2xl font-bold text-gray-800">Alquiler Material Audiovisual</h1>
+                </div>
+                <!-- Buscador -->
+                <div class="relative w-full md:w-64 mb-4 md:mb-0">
+                    <input type="text" id="buscador-equipos" placeholder="Buscar equipos..." class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+                
+                <!-- Navegación -->
+                <nav class="flex space-x-1 md:space-x-6">
+                    <a href="#audio" class="nav-link px-2 py-1 text-gray-700 hover:text-blue-500 transition duration-300">Audio</a>
+                    <a href="#video" class="nav-link px-2 py-1 text-gray-700 hover:text-blue-500 transition duration-300">Vídeo</a>
+                    <a href="#emision" class="nav-link px-2 py-1 text-gray-700 hover:text-blue-500 transition duration-300">Emisión</a>
+                    <a href="./web-propia-dj/djindex.html" class="nav-link px-2 py-1 text-gray-700 hover:text-blue-500 transition duration-300">Servicio DJ</a>
+                    <a href="#" id="contacto-link" class="nav-link px-2 py-1 text-gray-700 hover:text-blue-500 transition duration-300">Contacto</a>
+                    
+                </nav>
+
+                <div class="flex items-center space-x-4">
+                    <!-- Carrito -->
+                    <div id="carrito-header" class="relative">
+                        <button id="carrito-btn" class="flex items-center px-3 py-2 rounded-lg bg-blue-100 hover:bg-blue-200 transition">
+                            <i class="fas fa-shopping-cart text-blue-600 text-xl"></i>
+                            <span id="carrito-count" class="ml-2 text-blue-700 font-bold">0</span>
+                            <span id="carrito-total" class="ml-2 text-xs text-blue-700 font-bold">€0.00</span>
+                        </button>
+                        <!-- Carrito desplegable -->
+                        <div id="carrito-dropdown" class="absolute right-0 mt-2 w-[50vw] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl bg-white shadow-2xl rounded-xl border border-gray-200 z-50 hidden">
+                            <div class="p-4 max-h-[60vh] overflow-y-auto">
+                                <h4 class="font-bold mb-2 text-lg">Carrito</h4>
+                                <ul id="carrito-list" class="mb-2 text-sm"></ul>
+                                <div class="font-bold text-blue-700 text-right mb-4">Total: <span id="carrito-total2">€0.00</span></div>
+                                <div class="flex justify-end mt-4">
+                                    <button id="enviar-presupuesto" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg font-bold">Enviar Presupuesto</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Modal Contacto -->
+    <div id="contacto-modal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-lg p-6 w-80 text-center">
+            <p class="text-gray-700 text-sm mb-4">Si necesita atención personalizada para su evento audiovisual, nosotros le diseñamos el presupuesto. </p>
+            <p class="text-gray-700 text-sm">Póngase en contacto a través del nº de tfno <strong>+34 615202831</strong> o el email: <strong>jyyym@live.com</strong></p>
+            <button id="close-contacto-modal" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- Modal Enviar Presupuesto -->
+    <div id="modal-enviar-presupuesto" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-lg p-6 w-[90vw] max-w-md sm:max-w-lg">
+            <button id="cerrar-modal-enviar" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-xl">&times;</button>
+            <h4 class="font-bold text-lg mb-4 text-blue-700">Resumen del Presupuesto</h4>
+            <ul id="resumen-list" class="mb-4 text-sm"></ul>
+            <form>
+                <div>
+                    <label for="nombre" class="block text-sm font-bold text-gray-700">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" class="w-full px-3 py-2 border rounded-lg" required>
+                    
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-bold text-gray-700">Email:</label>
+                    <input type="email" id="email" name="email" class="w-full px-3 py-2 border rounded-lg" required>
+                    
+                </div>
+                <div>
+                    <label for="telefono" class="block text-sm font-bold text-gray-700">Teléfono:</label>
+                    <input type="tel" id="telefono" name="telefono" class="w-full px-3 py-2 border rounded-lg" required>
+                </div>
+                <button type="button" class="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-bold" onclick="sendMail()">Enviar</button>
+            </form>
+            <p class="mt-4 text-sm text-gray-600 text-center">En breves nos pondremos en contacto con usted, gracias por confiar en nosotros.</p>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="bg-blue-400 text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">Equipos Profesionales para tus Proyectos</h2>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+                Contacta con nostros <span id="solicitar-presupuesto" class="underline text-blue-800 cursor-pointer hover:text-blue-700">aquí</span> y haremos realidad tu  <strong>Evento Audiovisual</strong>
+            </p>
+            <script>
+                document.getElementById('solicitar-presupuesto').addEventListener('click', function() {
+                    document.getElementById('contacto-modal').classList.remove('hidden');
+                });
+            </script>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 DepartureMono monospace ">
+                <a href="#audio" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                    <i class="fas fa-microphone mr-2"></i> Alquiler Audio
+                </a>
+                <a href="#video" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                    <i class="fas fa-video mr-2"></i> Alquiler Vídeo
+                </a>
+                <a href="#emision" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                    <i class="fas fa-satellite-dish mr-2"></i> Alquiler Emisión
+                </a>
+                <a href="./web-propia-dj/djindex.html" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                    <i class="fas fa-compact-disc mr-2"></i> Servicio DJ
+                </a>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Audio Section -->
+    <section id="audio" class="section py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Equipos de Audio</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Técnico de Sonido -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/mujer.png" alt="Técnico de Sonido" class="h-full object-contain"
+                            onmouseover="this.src='./fotos/hombre.png'"
+                            onmouseout="this.src='./fotos/mujer.png'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Técnico de Sonido</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Profesional con experiencia garantizada en el montaje y manejo de los equipos, solvencia técnica y disposición para los requerimientos de nuestro cliente.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€240/día</span>
+                            <button data-alquilar data-max-unidades="1" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Riedel Bolero Stand Alone JORGE -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                <!-- tienes q cambiar la foto y el alt -->
+                        <img src="./fotos/jorge/BOLEROA.jpg" alt="BOLERO" class="h-full object-contain"
+                             onmouseover="this.src='./fotos/jorge/BOLEROB.png'"
+                             onmouseout="this.src='./fotos/jorge/BOLEROA.jpg'">
+                    </div>
+                    <div class="p-6">
+                <!-- te toca cambiar el nombre del equipo (en el H3) con la descripción al principio para que funcione con el buscador -->
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Intercom Riedel Bolero Stand Alone</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Sistema de intercomunicación inalámbrica profesional, plug-and-play, que incluye antena con licencia standalone, beltpack resistente con Bluetooth, micrófono y altavoz integrados, y comunicación clara tipo walkie-talkie. Se conecta por IP/AES67, soporta roaming, ofrecemos 10 petacas de transmisión. Ideal para entornos exigentes como conciertos, broadcast, retransmisiones deportivas...</p>
+                        <div class="flex justify-between items-center mt-auto">
+                <!-- cambia el precio aquí -->
+                            <span class="text-blue-600 font-bold">€160/día</span>
+                <!-- cambia el data-max-unidades a la cantidad máxima que tengas de ese equipo -->
+                            <button data-alquilar data-max-unidades="2" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- YAMAHA RIO JORGE  -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/jorge/RIOA.jpg" alt="Yamaha RIO" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/jorge/RIOB.jpg'"
+                                    onmouseout="this.src='./fotos/jorge/RIOA.jpg'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Stage Box Dante Yamaha RIO1608-D2</h3>
+                        <p class="text-gray-600 mb-4 text-justify"> Stage-box digital Dante de 16 entradas de micrófono/línea XLR (con phantom) y 8 salidas XLR analógicas, diseñado para restar carga de cableado en eventos. Ofrece conversión de alta fidelidad, baja latencia, fuentes duales redundantes y conectividad en cadena para máxima fiabilidad en conciertos y producción profesional </p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€160/día</span>
+                            <button data-alquilar data-max-unidades="1" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Mezcladora Digital Behringer X32 Compact -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/x32front.jpg" alt="Mezcladora Behringer X32 Compact" class="h-full object-contain"
+                            onmouseover="this.src='./fotos/x32back.jpg'"
+                            onmouseout="this.src='./fotos/x32front.jpg'"> 
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Mezcladora Digital Behringer X32 Compact</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Consola digital profesional con 32 entradas, 16 salidas 16 preamplificadores MIDAS, 17 faders motorizados y hasta 40 canales de mezcla. Ideal para directos, grabaciones y eventos complejos. Incluye efectos integrados y control remoto vía tablet o PC.</p>
+                        
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€80/día</span>
+                            <button data-alquilar data-max-unidades="1" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grabadora Portatil JORGE f-8n-pro-A -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/jorge/zoom-f-8n-pro-A.webp" alt="Grabadora Portatil ZOOM F8N Pro" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/jorge/zoom-f-8n-pro-B.webp'"
+                                    onmouseout="this.src='./fotos/jorge/zoom-f-8n-pro-A.webp'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Mezcladora Grabador Multipista Zoom F-8N Pro </h3>
+                        <p class="text-gray-600 mb-4 text-justify"> Grabadora y mezclador de campo multipista profesional: 8 entradas combo XLR/TRS, 10 pistas, grabación en 32 bits en coma flotante hasta 192 kHz, con Time Code preciso, alimentación versátil (pilas, DC o AC) y control remoto vía app móvil. Ideal para cine, entrevistas, música o documentales. </p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€70/día</span>
+                            <button data-alquilar data-max-unidades="2" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PA Beringher Eurolive B112D -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/pa1f.jpg" alt="PA Beringher Eurolive B112D" class="h-full object-contain"
+                            onmouseover="this.src='./fotos/pa1b.jpg'"
+                            onmouseout="this.src='./fotos/pa1f.jpg'"> 
+                        
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">PA Beringher Eurolive B112D</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Altavoz autoamplificado de 1000 W con woofer de 12" y driver de 1,35" para agudos. Ligero, potente y fácil de usar, perfecto para sonorizar eventos pequeños y medianos con capacidad para 100 personas cada uno. Entradas XLR y jack, y salida para enlazar otro altavoz.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€30/día</span>
+                            <button data-alquilar data-max-unidades="3" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PA DASN SCS15DH Receptor -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/DASN.png" alt="PA DASN SCS15DH Receptor" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/DASNfront.jpg'"
+                                    onmouseout="this.src='./fotos/DASN.png'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">PA DASN SCS15DH </h3>
+                        <p class="text-gray-600 mb-4 text-justify">Sistema de sonido profesional con receptor de 15" y 1000W de potencia y conexión bluetooth. Mayor capacidad de respuesta y calidad de sonido en eventos.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€60/día</span>
+                            <button data-alquilar data-max-unidades="1" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Receptor Shure SLXD4D H56 -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/shurefront.jpg" alt="Receptor Shure SLXD4D H56" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/shureback.jpg'"
+                                    onmouseout="this.src='./fotos/shurefront.jpg'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Receptor Shure SLXD4D H56</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Receptor inalámbrico digital de rack 19″ con 2 canales, recepción de audio garantizada de 24 bits y rango dinámico de 120 dB. Cubre frecuencias H56 (518–562 MHz). Ideal para eventos en directo, conferencias o shows, garantizando conectividad fiable y sin interferencias.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€60/día</span>
+                            <button data-alquilar data-max-unidades="2" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Micrófono Petaca Shure SLXD1 -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/slxd1.jpg" alt="Micrófono Petaca Shure SLXD1 H56" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/slxd12.jpg'"
+                                    onmouseout="this.src='./fotos/slxd1.jpg'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Micrófono Petaca Inalámbrico Shure SLXD1 H56</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Transmisor inalámbrico tipo “petaca” digital en banda H56 (518‑562 MHz), con audio en 24 bits/48 kHz y rango dinámico de 120 dB. Compacto, autónomo (hasta 8 h con pilas AA) y fácil de sincronizar con receptores Shure. Ideal para conectar micrófonos de solapa, diadema o instrumentos con total claridad y estabilidad..</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€30/día</span>
+                            <button data-alquilar data-max-unidades="2" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Micrófono Mano Inalámbrico SHURE SLXD2/SM58 H56 -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/inaf.jpg" alt="Micrófono Mano Inalámbrico SHURE SLXD2/SM58 H56" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/ianb.jpg'"
+                                    onmouseout="this.src='./fotos/inaf.jpg'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Micrófono Mano Inalámbrico SHURE SLXD2/SM58 H56</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Micrófono de mano inalámbrico digital con cápsula SM58, con duración de batería superior a 11 h, audio cristalino en 24 bits/48 kHz y transmisión segura RF sin interferencias. Compatible con receptores Shure SLXD, ideal para eventos, conferencias y actuaciones en directo por su fiabilidad y calided vocal.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€30/día</span>
+                            <button data-alquilar data-max-unidades="2" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- receptor SLXD4D shure jorge -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                <!-- tienes q cambiar la foto y el alt -->
+                        <img src="./fotos/jorge/ur4da.jpg" alt="shure ur4da" class="h-full object-contain"
+                             onmouseover="this.src='./fotos/jorge/ur4db.jpg'"
+                             onmouseout="this.src='./fotos/jorge/ur4da.jpg'">
+                    </div>
+                    <div class="p-6">
+                <!-- te toca cambiar el nombre del equipo (en el H3) con la descripción al principio para que funcione con el buscador -->
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Receptor Shure UR4D</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Receptor inalámbrico de doble canal en rack 19" que permite recibir señales de micrófonos y petacas Shure UHF‑R. Ofrece control digital de frecuencias, sincronización por infrarrojos, antenas integradas y fiabilidad profesional en entornos con múltiples sistemas inalámbricos activos. Ideal para instalaciones fijas, conciertos o grabaciones móviles.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                <!-- cambia el precio aquí -->
+                            <span class="text-blue-600 font-bold">€50/día</span>
+                <!-- cambia el data-max-unidades a la cantidad máxima que tengas de ese equipo -->
+                            <button data-alquilar data-max-unidades="3" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shure UR1 Wireless Bodypack JORGE -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                <!-- tienes q cambiar la foto y el alt -->
+                        <img src="./fotos/jorge/UR1A.jpg" alt="Shure UHF-R UR1" class="h-full object-contain"
+                             onmouseover="this.src='./fotos/jorge/UR1b.jpg'"
+                             onmouseout="this.src='./fotos/jorge/UR1A.jpg'">
+                    </div>
+                    <div class="p-6">
+                <!-- te toca cambiar el nombre del equipo (en el H3) con la descripción al principio para que funcione con el buscador -->
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Shure UHF-R UR1 Wireless Bodypack</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Transmisor de petaca compacto y ligero para sistemas inalámbricos Shure UHF. Permite conectar micrófonos de solapa, diadema o instrumentos, con control de ganancia y alimentación mediante pilas AA. Construcción robusta, fiabilidad de señal y fácil manejo para cualquier despliegue profesional.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                <!-- cambia el precio aquí -->
+                            <span class="text-blue-600 font-bold">€20/día</span>
+                <!-- cambia el data-max-unidades a la cantidad máxima que tengas de ese equipo -->
+                            <button data-alquilar data-max-unidades="6" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- palas y booster jorge -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                <!-- tienes q cambiar la foto y el alt -->
+                        <img src="./fotos/jorge/PALABOOSTERB.jpg" alt="Palas Sennheiser" class="h-full object-contain"
+                             onmouseover="this.src='./fotos/jorge/PALABOOSTERA.jpg'"
+                             onmouseout="this.src='./fotos/jorge/PALABOOSTERB.jpg'">
+                    </div>
+                    <div class="p-6">
+                <!-- te toca cambiar el nombre del equipo (en el H3) con la descripción al principio para que funcione con el buscador -->
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Sistema de Distribución RF Sennheiser</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Antenas activas de alta ganancia que mejoran la recepción de sistemas inalámbricos, reduciendo interferencias y aumentando la estabilidad de la señal. Diseñadas para optimizar el alcance en entornos con mucho tráfico de radiofrecuencia, ofrecen control de nivel de ganancia y fácil integración con sistemas inalámbricos profesionales de Sennheiser.Disponemos de dos Boosters de antenas Sennheiser y un conjunto de tres palas dos direccionales y una omnidireccional. </p>
+                        <div class="flex justify-between items-center mt-auto">
+                <!-- cambia el precio aquí -->
+                            <span class="text-blue-600 font-bold">€45/día</span>
+                <!-- cambia el data-max-unidades a la cantidad máxima que tengas de ese equipo -->
+                            <button data-alquilar data-max-unidades="3" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- SENNHEISER EW 100 G3 JORGE  -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/jorge/SENEW100A.jpg" alt="SENNHEISER EW 100 G3" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/jorge/SENEW100B.jpg'"
+                                    onmouseout="this.src='./fotos/jorge/SENEW100A.jpg'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Micrófono Petaca Inalámbrico Sennheiser EW 100 G3</h3>
+                        <p class="text-gray-600 mb-4 text-justify"> Sistema inalámbrico profesional que incluye emisores, receptor y micrófono de solapa. Ofrece hasta 12 canales programables, sincronización rápida, autonomía de aproximadamente 8 horas y excelente calidad de audio para entrevistas, presentaciones y reportajes. banda de frecuencias B-Band: 626 – 668 MHz </p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€40/día</span>
+                            <button data-alquilar data-max-unidades="6" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- SENNHEISER diadema me3 JORGE  -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/jorge/ME3A.jpg" alt="SENNHEISER ME3" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/jorge/ME3B.jpg'"
+                                    onmouseout="this.src='./fotos/jorge/ME3A.jpg'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Micrófono Diadema Sennheiser ME3</h3>
+                        <p class="text-gray-600 mb-4 text-justify"> Micrófono de diadema cardioide de alta calidad, confortable y ligero, excelente para captar voz con claridad en presentaciones, actuaciones o eventos. Compatible con transmisores inalámbricos EW, XSW y D1, y perfecto para uso profesional en escenarios. </p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€20/día</span>
+                            <button data-alquilar data-max-unidades="9" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sennheiser mke2gold jorge -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                <!-- tienes q cambiar la foto y el alt -->
+                        <img src="./fotos/jorge/mke2goldB.webp" alt="SENHEISER mke2gold" class="h-full object-contain"
+                             onmouseover="this.src='./fotos/jorge/mke2goldA.webp'"
+                             onmouseout="this.src='./fotos/jorge/mke2goldB.webp'">
+                    </div>
+                    <div class="p-6">
+                <!-- te toca cambiar el nombre del equipo (en el H3) con la descripción al principio para que funcione con el buscador -->
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Micrófono de Solapa Sennheiser MKE 2 Gold</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Micrófono de solapa profesional, ultraportátil y resistente al sudor gracias a su tecnología “Umbrella Diaphragm™”. Capta voz de forma nítida y natural, con amplio rango de frecuencia (20 Hz–20 kHz) y una construcción robusta ideal para eventos, conciertos, retransmisiones deportivas, broadcast TV y vídeo institucional.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                <!-- cambia el precio aquí -->
+                            <span class="text-blue-600 font-bold">€20/día</span>
+                <!-- cambia el data-max-unidades a la cantidad máxima que tengas de ese equipo -->
+                            <button data-alquilar data-max-unidades="6" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- solapa iman sennheiser MKE 40 jorge -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                <!-- tienes q cambiar la foto y el alt -->
+                        <img src="./fotos/jorge/mk40A.jpg" alt="sennheiser MKE 40" class="h-full object-contain"
+                             onmouseover="this.src='./fotos/jorge/mk40b.jpg'"
+                             onmouseout="this.src='./fotos/jorge/mk40A.jpg'">
+                    </div>
+                    <div class="p-6">
+                <!-- te toca cambiar el nombre del equipo (en el H3) con la descripción al principio para que funcione con el buscador -->
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Micrófono de Imán Sennheiser MKE 40</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Micrófono de solapa cardioide profesional con excelente ganancia y rechazo de retroalimentación. Ofrece gran claridad de voz y bajo nivel de ruido ambiente. Compatible con transmisores Evolution Wireless (EW), ideal para conferencias, eventos, retransmisiones deportivas, broadcast TV e institucional.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                <!-- cambia el precio aquí -->
+                            <span class="text-blue-600 font-bold">€10/día</span>
+                <!-- cambia el data-max-unidades a la cantidad máxima que tengas de ese equipo -->
+                            <button data-alquilar data-max-unidades="5" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SENNHEISER mano 100 G3 JORGE  -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/jorge/SKMA.jpg" alt="Sennheiser SKM 100-865 G3
+                        " class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/jorge/SKMB.jpg'"
+                                    onmouseout="this.src='./fotos/jorge/SKMA.jpg'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Micrófono de Mano Inalámbrico Sennheiser SKM 100-865 G3</h3>
+                        <p class="text-gray-600 mb-4 text-justify"> Sistema inalámbrico profesional de mano que incluye micrófono dinámico (E835), transmisor SK100 G3 y receptor EK100 G3. Ofrece hasta 1 680 frecuencias sintonizables y sincronización infrarroja rápida, con excelente calidad de audio, fácil manejo y estabilidad en entornos ENG, entrevistas y eventos en vivo. B-Band: 626 – 668</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€40/día</span>
+                            <button data-alquilar data-max-unidades="3" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Micrófono Petaca AKG PT 45 -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/akgfront.webp" alt="Micrófono Petaca AKG PT 45" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/akgback.webp'"
+                                    onmouseout="this.src='./fotos/akgfront.webp'">   
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Micrófono Petaca Inalámbrico AKG PT 45</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Micrófono de petaca omnidireccional con respuesta de frecuencia optimizada para voz. Transmisor compacto y ligero (≈ 60 g) con conectividad mini‑XLR y control de ganancia integrado. Funciona hasta 8 h con 1 pila AA, ofrece audio limpio con relación señal/ruido de ≈ 105 dB, opera en bandas UHF 863.100-864,900MHz </p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€15/día</span>
+                            <button data-alquilar data-max-unidades="2" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+               
+                <!-- micrófono de cañon JORGE SENHEISER MKH 416 -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/jorge/senA.jpg" alt="Micrófono de Cañon senheiser mkh416" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/jorge/senB.webp'"
+                                    onmouseout="this.src='./fotos/jorge/senA.jpg'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Micrófono de Cañon Senheiser MKH416</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Micrófono de captación cinematográfico formato shotgun de condensador RF, altamente direccional (supercardioide), espectro de captación completo (20hz a 20khz), bajo ruido inherente y resistencia a condiciones meteorológicas adversas. Perfecto para grabar diálogos en exteriores, cine y emisiones profesionales. </p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€65/día</span>
+                            <button data-alquilar data-max-unidades="6" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Micrófono de Cañon RODE NTG3 -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/ntg3front.webp" alt="Micrófono de Cañon RODE NTG3" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/ntg3back.webp'"
+                                    onmouseout="this.src='./fotos/ntg3front.webp'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Micrófono de Cañon RODE NTG3</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Micrófono de cañón profesional con patrón super‑cardioide, audio broadcast limpio.Resistente a condiciones climáticas adversas y muy direccional, ideal para grabación de diálogos en exteriores y cine. Requiere alimentación phantom 48 V y conexión XLR, garantizando gran calidad en sonido detalle y rechazo de ruido.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€30/día</span>
+                            <button data-alquilar data-max-unidades="1" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <!-- Micrófono de Solapa Omnidireccional Sony ECM-44B -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/sonyfront.jpg" alt="Micrófono de Solapa Omnidireccional Sony ECM-44B" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/sonyback.jpg'"
+                                    onmouseout="this.src='./fotos/sonyfront.jpg'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Micrófono de Solapa Omnidireccional Sony ECM-44B</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Micrófono de solapa compacto (8,5 mm) con cápsula electret omnidireccional. Funciona con pila AA, sin necesidad de alimentación phantom, ideal para captación vocal nítida y discreta en presentaciones, entrevistas o vídeo. Incluye pinza, antiviento y cable XLR.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€20/día</span>
+                            <button data-alquilar data-max-unidades="2" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Micrófono de mano Beringher XM1800S -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/micfront.webp" alt="Micrófono de mano Beringher XM1800S" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/micback.webp'"
+                                    onmouseout="this.src='./fotos/micfront.webp'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Micrófono de mano Beringher XM1800S</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Micrófono dinámico cardioide con excelente rechazo de retroalimentación y ruido.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€10/día</span>
+                            <button data-alquilar data-max-unidades="4" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- micro percusion Sennheiser e 904-->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                <!-- tienes q cambiar la foto y el alt -->
+                        <img src="./fotos/jorge/E904.jpg" alt="Senhheiser E904" class="h-full object-contain"
+                             onmouseover="this.src='./fotos/jorge/E904B.jpg'"
+                             onmouseout="this.src='./fotos/jorge/E904.jpg'">
+                    </div>
+                    <div class="p-6">
+                <!-- te toca cambiar el nombre del equipo (en el H3) con la descripción al principio para que funcione con el buscador -->
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Micrófono de Percusión Sennheiser E 904</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Micrófono dinámico compacto, diseñado especialmente para batería y percusión. Ofrece gran presión sonora, sonido definido en cajas y toms, y un clip integrado que permite montaje rápido y seguro en cualquier aro de tambor. Construcción robusta para soportar uso intensivo en directo o grabación.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                <!-- cambia el precio aquí -->
+                            <span class="text-blue-600 font-bold">€30/día</span>
+                <!-- cambia el data-max-unidades a la cantidad máxima que tengas de ese equipo -->
+                            <button data-alquilar data-max-unidades="4" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Grabadora Portatil ZOOM H4N Pro -->
+                 <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/zoomfront.jpg" alt="Grabadora Portatil ZOOM H4N Pro" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/zoomback.jpg'"
+                                    onmouseout="this.src='./fotos/zoomfront.jpg'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Grabadora Portatil ZOOM H4N Pro</h3>
+                        <p class="text-gray-600 mb-4 text-justify"> Grabadora portátil profesional de hasta 4 pistas simultáneas y audio a 24 bits/96 kHz. Micrófonos integrados X/Y ajustables (90–120°), entradas Combo XLR/TRS con phantom, funciona hasta 6 h con pilas y sirve como interfaz USB. Ideal para grabación en campo, podcasts, música y entrevistas gracias a su robustez y versatilidad.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€25/día</span>
+                            <button data-alquilar data-max-unidades="1" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cascos Inalambricos Sony wh1000-xm5 -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                <!-- tienes q cambiar la foto y el alt -->
+                        <img src="./fotos/jorge/xm5a.jpg" alt="Sony wh1000-xm5" class="h-full object-contain"
+                             onmouseover="this.src='./fotos/jorge/xm5b.jpg'"
+                             onmouseout="this.src='./fotos/jorge/xm5a.jpg'">
+                    </div>
+                    <div class="p-6">
+                <!-- te toca cambiar el nombre del equipo (en el H3) con la descripción al principio para que funcione con el buscador -->
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Auriculares Inalámbricos SONY WH1000-XM5</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Auriculares inalámbricos circumaurales con cancelación activa de ruido líder en el mercado, hasta 30 h de autonomía con ANC activado (40 h sin), calidad de sonido Hi-Res (LDAC) y micrófonos con IA para una intercomunicación nítida. Su ergonomía y adaptabilidad destacan para largas sesiones de uso en trabajo.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                <!-- cambia el precio aquí -->
+                            <span class="text-blue-600 font-bold">€90/día</span>
+                <!-- cambia el data-max-unidades a la cantidad máxima que tengas de ese equipo -->
+                            <button data-alquilar data-max-unidades="2" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                                <!-- Cascos Inalambricos Sony wh1000-xm4 -->
+                                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                                <!-- tienes q cambiar la foto y el alt -->
+                                        <img src="./fotos/jorge/xm4a.jpg" alt="Sony wh1000-xm4" class="h-full object-contain"
+                                             onmouseover="this.src='./fotos/jorge/xm4b.jpg'"
+                                             onmouseout="this.src='./fotos/jorge/xm4a.jpg'">
+                                    </div>
+                                    <div class="p-6">
+                                <!-- te toca cambiar el nombre del equipo (en el H3) con la descripción al principio para que funcione con el buscador -->
+                                        <h3 class="text-xl font-bold text-gray-800 mb-2">Auriculares Inalámbricos SONY WH1000-XM4</h3>
+                                        <p class="text-gray-600 mb-4 text-justify">Auriculares inalámbricos de alta gama con cancelación activa de ruido líder del sector, hasta 30 horas de batería, sonido Hi-Res (LDAC), y reconocimiento de voz inteligente. Perfectos para largas sesiones, videollamadas o entornos urbanos, ofrecen comodidad, claridad y experiencia auditiva premium.</p>
+                                        <div class="flex justify-between items-center mt-auto">
+                                <!-- cambia el precio aquí -->
+                                            <span class="text-blue-600 font-bold">€80/día</span>
+                                <!-- cambia el data-max-unidades a la cantidad máxima que tengas de ese equipo -->
+                                            <button data-alquilar data-max-unidades="1" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                <!-- cascos auditechnica Jorge -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <!-- tienes q cambiar la foto y el alt -->
+                        <img src="./fotos/jorge/audiotechA.webp" alt="Audiotechnica" class="h-full object-contain"
+                             onmouseover="this.src='./fotos/jorge/audiotechB.webp'"
+                             onmouseout="this.src='./fotos/jorge/audiotechA.webp'">
+                    </div>
+                    <div class="p-6">
+                         <!-- te toca cambiar el nombre del equipo (en el H3) con la descripción al principio para que funcione con el buscador -->
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Auriculares Audio-Technica ATH-M50x
+                        </h3>
+                        <p class="text-gray-600 mb-4 text-justify">Auriculares cerrados de alta calidad para estudio y monitorización: transductores de 45 mm que ofrecen graves profundos, medios claros y agudos detallados. Diseñados para comodidad prolongada —diadema acolchada, almohadillas suaves— y cables desmontables. Excelente para grabaciones, mezcla, sesiones largas y DJ.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                <!-- cambia el precio aquí -->
+                            <span class="text-blue-600 font-bold">€20/día</span>
+                <!-- cambia el data-max-unidades a la cantidad máxima que tengas de ese equipo -->
+                            <button data-alquilar data-max-unidades="2" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Auriculares KZ ZS10 PRO X Jorge -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                <!-- tienes q cambiar la foto y el alt -->
+                        <img src="./fotos/jorge/kza.jpg" alt="kz cs10" class="h-full object-contain"
+                             onmouseover="this.src='./fotos/jorge/kzb.jpg'"
+                             onmouseout="this.src='./fotos/jorge/kza.jpg'">
+                    </div>
+                    <div class="p-6">
+                <!-- te toca cambiar el nombre del equipo (en el H3) con la descripción al principio para que funcione con el buscador -->
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Auriculares Deportivos KZ ZS10 Pro</h3>
+                        <p class="text-gray-600 mb-4 text-justify">auriculares internos híbridos de Metal de graves HIFI, auriculares deportivos con cancelación de ruido, ideales para garantizar la comunicación interna del equipo técnico en ambientes con excesiva carga de ruido ambiente.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                <!-- cambia el precio aquí -->
+                            <span class="text-blue-600 font-bold">€4/día</span>
+                <!-- cambia el data-max-unidades a la cantidad máxima que tengas de ese equipo -->
+                            <button data-alquilar data-max-unidades="10" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <!-- Ecualizador de Estudio Válvulas Klark Teknik EQP-KT -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/eqpktfront.webp" alt="Ecualizador de Estudio Válvulas Klark Teknik EQP-KT" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/eqpktback.webp'"
+                                    onmouseout="this.src='./fotos/eqpktfront.webp'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Ecualizador de Estudio Válvulas Klark Teknik EQP-KT</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Ecualizador de válvulas de 1 sólo canal con sonido cálido y clásico para estudio profesional.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€40/día</span>
+                            <button data-alquilar data-max-unidades="2"  class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Compresor de Estudio Válvulas ART Pro VLA II -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/artprofront.jpg" alt="Compresor de Estudio Válvulas ART Pro VLA II" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/artproback.jpg'"
+                                    onmouseout="this.src='./fotos/artprofront.jpg'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Compresor de Estudio Válvulas ART Pro VLA II</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Compresor de válvulas de 2 canales con sonido analógico cálido para mezcla y masterización.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€70/día</span>
+                            <button data-alquilar data-max-unidades="1" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+                  
+        <div class="box" style="  margin: 10px; padding: 30px;">
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="#audio" class="bg-blue-100 text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                <i class="fas fa-microphone mr-2"></i> Alquiler Audio
+            </a>
+            <a href="#video" class="bg-blue-100 text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                <i class="fas fa-video mr-2"></i> Alquiler Vídeo
+            </a>
+            <a href="#emision" class="bg-blue-100 text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                <i class="fas fa-satellite-dish mr-2"></i> Alquiler Emisión
+            </a>
+        </div>
+
+    </section>
+
+    <!-- Video Section -->
+    <section id="video" class="section py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Equipos de Vídeo</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Operador de cámara -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/video/mujer.png" alt="Operador de Cámara" class="h-full object-contain"
+                            onmouseover="this.src='./fotos/video/hombre.png'"
+                            onmouseout="this.src='./fotos/video/mujer.png'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Operador de cámara</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Profesional con experiencia garantizada en el manejo de cámaras y equipos de grabación, asegurando la calidad y eficiencia en la producción audiovisual.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€200/día</span>
+                            <button data-alquilar data-max-unidades="1" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Proyector Panasonic -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <!-- tienes q cambiar la foto y el alt -->
+                        <img src="./fotos/jorge/PANAA.jpg" alt="Proyector 5000 Lumens" class="h-full object-contain"
+                             onmouseover="this.src='./fotos/jorge/PANAB.jpg'"
+                             onmouseout="this.src='./fotos/jorge/PANAA.jpg'">
+                    </div>
+                    <div class="p-6">
+                        <!-- te toca cambiar el nombre del equipo (en el H3) con la descripción al principio para que funcione con el buscador -->
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Proyector Panasonic 5000 Lumens</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Proyector láser profesional de 5.200 lúmenes (WUXGA), ideal para salas luminosas. Ligero y compacto (~6,5 kg), con zoom óptico 1,6×, corrección de pantalla en 6 puntos y óptica que permite ajustes horizontales y verticales. Perfecto para presentaciones, eventos corporativos o conferencias donde se requiere calidad y versatilidad.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <!-- cambia el precio aquí -->
+                            <span class="text-blue-600 font-bold">€35/día</span>
+                            <!-- cambia el data-max-unidades a la cantidad máxima que tengas de ese equipo -->
+                            <button data-alquilar data-max-unidades="2" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <!-- Cámara Broadcast Blackmagic Pocket Cinema Camera 4K -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/video/bmpc4k1.webp" alt="Cámara Broadcast Blackmagic Pocket Cinema Camera 4K" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/video/bmpc4k2.webp'"
+                                    onmouseout="this.src='./fotos/video/bmpc4k1.webp'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Blackmagic Pocket Cinema Camera 4K</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Cámara de cine compacta con sensor MFT de 13 pasos de rango dinámico, grabación en Blackmagic RAW o ProRes hasta 4K DCI a 60 fps. Pantalla táctil de 5", entradas mini‑XLR y USB‑C externo, perfecta para cine independiente, documentales o videoclips con calidad profesional y máxima flexibilidad.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€70/día</span>
+                            <button data-alquilar data-max-unidades="1" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Óptica Cine 12mm T3.1 -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/video/sam1.jpg" alt="Óptica Cine 12mm T3.1 Samyang" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/video/sam2.jpg'"
+                                    onmouseout="this.src='./fotos/video/sam1.jpg'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Óptica Cine 12mm T3.1 Samyang</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Súper gran angular manual para vídeo y cine con enfoque manual y apertura T3.1. Fabricada en aluminio con engranajes compatibles con follow focus, revestimiento NCS y óptica ED/AS para minimizar aberraciones. Ideal para planos creativos, paisajes o tomas interiores muy dramáticas, admite enfoque cercano desde 20 cm.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€25/día</span>
+                            <button data-alquilar data-max-unidades="1" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Viltrox Optica Cine 56mm T1.5 -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/video/vilt1.jpg" alt="Viltrox Optica Cine 56mm T1.5" class="h-full object-contain"
+                             onmouseover="this.src='./fotos/video/vilt2.jpg'"
+                             onmouseout="this.src='./fotos/video/vilt1.jpg'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Viltrox 56mm T1.5</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Objetivo de cine manual con apertura ultra rápida T1.5, montura MFT, anillos de enfoque e iris estilo cine (0.8 MOD), iris de 14 hojas para bokeh suave, recubrimientos multicapa y construcción metálica resistente. Ideal para grabar con poca luz y tener control de profundidad de campo limpio y cinematográfico.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€35/día</span>
+                            <button data-alquilar data-max-unidades="1" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sony Alpha zv e10 -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <!-- tienes q cambiar la foto y el alt -->
+                        <img src="./fotos/jorge/zva.jpg" alt="Sony Alpha zv e10" class="h-full object-contain"
+                             onmouseover="this.src='./fotos/jorge/zvb.jpg'"
+                             onmouseout="this.src='./fotos/jorge/zva.jpg'">
+                    </div>
+                    <div class="p-6">
+                        <!-- te toca cambiar el nombre del equipo (en el H3) con la descripción al principio para que funcione con el buscador -->
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Cámara Sony Alpha ZV </h3>
+                        <p class="text-gray-600 mb-4 text-justify">Sensor APS-C de 24 MP, 4K hasta 30 fps, pantalla táctil abatible, micrófono direccional integrado y enfoque rápido con seguimiento ocular. Compacta y versátil para grabar vblogs, streams o vídeos de redes sociales con imagen nítida y colores vivos.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <!-- cambia el precio aquí -->
+                            <span class="text-blue-600 font-bold">€100/día</span>
+                            <!-- cambia el data-max-unidades a la cantidad máxima que tengas de ese equipo -->
+                            <button data-alquilar data-max-unidades="3" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Arlo Ultra Jorge -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <!-- tienes q cambiar la foto y el alt -->
+                        <img src="./fotos/jorge/arloa.jpg" alt="LOREM" class="h-full object-contain"
+                             onmouseover="this.src='./fotos/jorge/arlob.jpg'"
+                             onmouseout="this.src='./fotos/jorge/arloa.jpg'">
+                    </div>
+                    <div class="p-6">
+                        <!-- te toca cambiar el nombre del equipo (en el H3) con la descripción al principio para que funcione con el buscador -->
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Cámara de Seguridad Arlo Ultra</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Cámara de seguridad 4K inalámbrica, ideal para grabar en alta definición tanto de día como de noche. Gracias a su conectividad en la nube y a la posibilidad de programar capturas periódicas, es ideal para planificar secuencias de time-lapse, mostrando en pocos segundos procesos largos como montajes, reformas o cambios en exteriores.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <!-- cambia el precio aquí -->
+                            <span class="text-blue-600 font-bold">€25/día</span>
+                            <!-- cambia el data-max-unidades a la cantidad máxima que tengas de ese equipo -->
+                            <button data-alquilar data-max-unidades="4" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!--  Gymbal Zhiyun Crane 2  -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/video/gym1.webp" alt="Gymbal Zhiyun Crane 2" class="h-full object-contain"
+                             onmouseover="this.src='./fotos/video/gym2.webp'"
+                             onmouseout="this.src='./fotos/video/gym1.webp'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Gymbal Zhiyun Crane 2</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Estabilizador de mano de 3 ejes con control de enfoque integrado, capaz de soportar cámaras DSLR o mirrorless de hasta 3,2 kg. Batería con hasta 18 h de autonomía y pantalla OLED intuitiva. Permite tomas fluidas y profesionales, ideal para vídeo, rodajes o grabaciones móviles con control preciso.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€40/día</span>
+                            <button data-alquilar data-max-unidades="1" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            
+
+                <!-- Tripode Manfrotto -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/video/man1.webp" alt="Tripode Manfrotto" class="h-full object-contain"
+                             onmouseover="this.src='./fotos/video/man2.jpg'"
+                             onmouseout="this.src='./fotos/video/man1.webp'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Tripode Manfrotto</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Trípode profesional con cabeza fluida para cámaras de video.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€20/día</span>
+                            <button data-alquilar data-max-unidades="1" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blackmagic Micro Converter BiDirect SDI HDMI 3G -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/video/conver.jpg" alt="Blackmagic Micro Converter BiDirect SDI HDMI 3G" class="h-full object-contain">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Blackmagic SDI/HDMI 3G</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Conversor bidireccional entre SDI y HDMI con soporte 3G-SDI.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€15/día</span>
+                            <button data-alquilar data-max-unidades="2" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div class="box" style="  margin: 10px; padding: 30px;">
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="#audio" class="bg-blue-100 text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                <i class="fas fa-microphone mr-2"></i> Alquiler Audio
+            </a>
+            <a href="#video" class="bg-blue-100 text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                <i class="fas fa-video mr-2"></i> Alquiler Vídeo
+            </a>
+            <a href="#emision" class="bg-blue-100 text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                <i class="fas fa-satellite-dish mr-2"></i> Alquiler Emisión
+            </a>
+            
+        </div>
+    </section>
+
+    <!-- Emisión Section -->
+    <section id="emision" class="section py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Equipos de Emisión</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Operador de streaming -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/emision/mujer.png" alt="Realizador Audiovisual" class="h-full object-contain"
+                            onmouseover="this.src='./fotos/emision/hombre.png'"
+                            onmouseout="this.src='./fotos/emision/mujer.png'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Realizador Audiovisual</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Profesional con experiencia garantizada en el manejo de diversas plataformas de realización multicámara y emisión en directo para cualquier tipo de evento audiovisual.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">260/día</span>
+                            <button data-alquilar data-max-unidades="1" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Ordenador Sobremesa Ryzen Customizado -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/emision/ryzen1.webp" alt="Ordenador Sobremesa Ryzen Customizado" class="h-full object-contain"
+                             onmouseover="this.src='./fotos/emision/ryzen2.webp'"
+                             onmouseout="this.src='./fotos/emision/ryzen1.webp'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Workstation Ryzen </h3>
+                        <p class="text-gray-600 mb-4 text-justify">WorkStation de alto rendimiento, customizado para garantizar cualquier emisión y producción Multicámara. Intel(R) Core(TM) i9, 64mb RAM, Grafica NVIDIA GEFORCE RTX 3080 12gb. Puerto de Ethernet 2,5gb preparado para transmisión óptima de fuentes NDI.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€120/día</span>
+                            <button data-alquilar data-max-unidades="1"  class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tarjeta Capturadora de Vídeo Pci Black Magic Decklink 8K pro -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/emision/bm.jpg" alt="Tarjeta Capturadora de Vídeo Pci Black Magic Decklink 8K pro" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/emision/bm2.png'"
+                                    onmouseout="this.src='./fotos/emision/bm.jpg'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Black Magic Decklink 8K Pro</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Tarjeta PCI‑Express de captación y reproducción profesional con cuatro puertos bidireccionales 12G‑SDI y HDMI 2.1, compatible con vídeo hasta 8K 60p, señales SD/HD/4K/8K, audio SDI embebido, y soporte multicanal con SDK DeckLink.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€45/día</span>
+                            <button data-alquilar data-max-unidades="1"  class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta Capturadora de Audio Pci ESI MAYA44ex -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/emision/esimaya.jpg" alt="Tarjeta Capturadora de Audio Pci ESI MAYA44ex" class="h-full object-contain">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">ESI MAYA44ex</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Interfaz de audio PCIe con 2 entradas y 2 salidas analógicas, convertidores A/D y D/A a 24 bits/96 kHz con rango dinámico de hasta 108 dB. Incorpora preamplificador de micrófono con phantom de +48 V, entrada Hi‑Z para instrumentos y conexión óptica S/PDIF. Compatible con ASIO, DirectWIRE y DirectSound, ideal para grabación en estudio o producción doméstica profesiona.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€20/día</span>
+                            <button data-alquilar data-max-unidades="1"  class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Ordenador Portatil MSI -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/emision/msi.png" alt="Ordenador Portatil MSI" class="h-full object-contain">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Ordenador Portátil MSI</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Portátil gaming de alto rendimiento con pantalla de alta frecuencia de actualización. Intel(R) Core(TM) i8, 16mb RAM, </p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€50/día</span>
+                            <button data-alquilar data-max-unidades="1"  class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ordenador Portatil HP -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/emision/hp.webp" alt="Ordenador Portatil HP" class="h-full object-contain">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Ordenador Portátil HP</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Portátil profesional con gran autonomía y rendimiento para producción multimedia.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€40/día</span>
+                            <button data-alquilar data-max-unidades="1"  class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+<!-- Capturadora de Sonido Focusrite Scarlett 4i4 4rd Gen -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/focusf.webp" alt="Focusrite Scarlett 4i4 4rd Gen" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/focusb.webp'"
+                                    onmouseout="this.src='./fotos/focusf.webp'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Focusrite Scarlett 4i4 4rd Gen</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Interfaz de audio USB‑C con 2 preamplis Scarlett (hasta 69 dB), 2 entradas de instrumento, 4 salidas de línea, salida de auriculares y MIDI. Soporta audio hasta 24 bits/192 kHz, modo ‘Air’, auto‑gain, clip‑safe y loopback para streaming y capturas internas. Ideal para músicos, podcasting y producción casera con calidad profesional.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€40/día</span>
+                            <button data-alquilar data-max-unidades="1"  class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Licencia Original Vmix -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/emision/vmixlog.jpg" alt="Licencia Original Vmix" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/emision/vmix.png'"
+                                    onmouseout="this.src='./fotos/emision/vmixlog.jpg'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Licencia Original Vmix PRO</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Software de realización multicámara y streaming en directo con capacidad para múltiples entradas, llamadas remotas (vMix Call), efectos gráficos, grabación y mezcla en 4K. Ideal para eventos, directos profesionales o servicios de Broadcast.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€50/día</span>
+                            <button data-alquilar data-max-unidades="1"  class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Licencia Original Ableton -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/emision/ableton1.jpg" alt="Licencia Original Ableton 12" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/emision/ableton2.png'"
+                                    onmouseout="this.src='./fotos/emision/ableton1.jpg'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Licencia Original Ableton Live 12</h3>
+                        <p class="text-gray-600 mb-4 text-justify">DAW completo con más de 70 GB de sonidos, instrumentos y efectos, integración con Max for Live y grabación audio/MIDI ilimitada. Disponible en compra directa o plan de pago mensual que termina con la propiedad total. Ideal para producción musical, DJs, y composición avanzada..</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€50/día</span>
+                            <button data-alquilar data-max-unidades="1"  class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Router SIM TP-Link Archer MR200 V4 -->
+                <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center">
+                        <img src="./fotos/emision/tp.webp" alt="Router SIM TP-Link Archer MR200 V4" class="h-full object-contain"
+                                    onmouseover="this.src='./fotos/emision/tp2.webp'"
+                                    onmouseout="this.src='./fotos/emision/tp.webp'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Router TP-Link Archer MR200 V4</h3>
+                        <p class="text-gray-600 mb-4 text-justify">Router Dual Band 4G LTE AC750 con ranura para SIM y conexión inalámbrica de alta velocidad.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-blue-600 font-bold">€10/día</span>
+                            <button data-alquilar data-max-unidades="1"  class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                                <i class="fas fa-shopping-cart mr-2"></i> Alquilar
+                            </button>
+                            </div>
+                           
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box" style="  margin: 10px; padding: 30px;">
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="#audio" class="bg-blue-100 text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                <i class="fas fa-microphone mr-2"></i> Alquiler Audio
+            </a>
+            <a href="#video" class="bg-blue-100 text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                <i class="fas fa-video mr-2"></i> Alquiler Vídeo
+            </a>
+            <a href="#emision" class="bg-blue-100 text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                <i class="fas fa-satellite-dish mr-2"></i> Alquiler Emisión
+            </a>
+        </div>
+        
+
+    </section>
+<script src="./script.js"></script>
+
+
+</body>
+</html>

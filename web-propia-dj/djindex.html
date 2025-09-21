@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+        </script>
+        <script type="text/javascript">
+        (function(){
+        emailjs.init({
+            publicKey: "vx8L-z5rNQzE-usNx",
+        });
+        })();
+        </script>
+    <link rel="stylesheet" href="estilo.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+<body>
+    
+</head>
+<header>
+    <div class="h1">
+        <h1>Sesión Dj Profesional</h1>
+        
+    </div>
+</header>
+<div class="barra-superior">
+    <div class="contact-box">
+        <!-- Botón Contacto -->
+        <a href="javascript:void(0)" class="btn btn-contact" id="btn-contacto">
+            <i class="fas fa-envelope"></i> Contacto
+        <!-- Botón volver a index -->
+        </button>
+        <a href="../index.html" id="btn-volver" class="btn-volver">
+            <i class="fas fa-arrow-left"></i> Volver
+
+        </a>
+        
+        
+    </div>
+</div>
+
+
+
+</div>
+
+<!-- Modal Contacto -->
+<div id="contacto-modal" class="modal oculto">
+    <div class="modal-content">
+        <span class="close-btn" id="close-contacto">&times;</span>
+        <p>Póngase en contacto a través del teléfono:<p><strong>   +34 615202831</strong> o el correo: <strong>jyyym@live.com</strong></p>
+    </div>
+</div>
+
+
+
+<!-- Modal para mostrar el pack seleccionado -->
+<div id="modal-pack" class="modal oculto">
+    <div class="modal-content">
+        <span class="close-btn" id="cerrar-modal-pack">&times;</span>
+        <h4 class="font-bold text-lg mb-4 text-blue-700">Pack Seleccionado</h4>
+        <p id="nombre-pack" class="text-lg font-bold"></p>
+        <p id="precio-pack" class="text-lg"></p>
+        <form> <!-- Modal donde te pide el nombre email y tfno -->
+            <div>
+                <label for="nombre" class="block text-sm font-bold text-gray-700">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" class="w-full px-3 py-2 border rounded-lg" required>
+                
+            </div>
+            <div>
+                <label for="email" class="block text-sm font-bold text-gray-700">Email:</label>
+                <input type="email" id="email" name="email" class="w-full px-3 py-2 border rounded-lg" required>
+                
+            </div>
+            <div>
+                <label for="telefono" class="block text-sm font-bold text-gray-700">Teléfono:</label>
+                <input type="tel" id="telefono" name="telefono" class="w-full px-3 py-2 border rounded-lg" required>
+            </div>
+            <button type="button" class="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-bold" onclick="sendMail()">Enviar</button>
+            
+        </form>
+    </div>
+</div>
+
+<div class="presentación">
+    <h2>Convierte tu Evento en una Experiencia Inolvidable</h2>
+    <div id="chapa">
+        <p>
+            Con más de <em>veinte años</em> de experiencia amenizando todo tipo de eventos; fiestas corporativas, bodas, presentaciones institucionales, fiestas locales... Trabajamos con los mejores equipos técnicos dedicados y nos sentimos a gusto con cualquier tipo de música; éxitos de siempre, clásicos pop,60´s,70´s 80´s, oldies, música española, rock, punk, postpunk, rockabilly, ska, swing, jazz, indie, electrónica, música latina, etc... Nuestro equipo, antes que ser técnicos han sido y seguirán siendo verdaderos obsesos y diletantes de la música, así que nos sorprenderás si nos descubres un nuevo artista. Pide tu Playlist <em>¡¡Es tu Fiesta!!</em>, o mejor aún, déjate asesorar por los mejores ;).
+        </p>
+    </div>
+    
+    <div class="desplegable">
+        <select name="packs" id="packs" onchange="actualizarPedido(this.value);">
+            <option value="pagina0" selected>Elige tu Pack</option>
+            <option value="basico">Pack Básico</option>
+            <option value="vip">Pack VIP</option>
+            <option value="custom">Customiza tu Pack</option>
+        </select>
+        <br><br><br><br>    
+        <img id="foto" src="./material/vinilos.png" alt="Pack Básico" class="fade" />
+    </div>
+
+    <div id="descripcion"></div>
+</div> 
+
+<!-- Botón para seleccionar el pack -->
+<div class="boton-seleccion">
+    <button id="btn-seleccionar-pack" class="btn-seleccionar-pack">Selecciona este Pack</button>
+</div>
+
+<script>
+    // Llamar a cambiarDescripcion y cambiarFoto al cargar la página
+    document.addEventListener("DOMContentLoaded", function () {
+    const defaultPack = "pagina0"; // Valor predeterminado
+    cambiarFoto(defaultPack);
+    cambiarDescripcion(defaultPack);
+    });
+    
+    function cambiarFoto(opcion) {
+        const foto = document.getElementById("foto");
+
+        // Cambia el src según la opción seleccionada
+        switch (opcion) {
+            
+            case "basico":
+                foto.src = "./modelos/Pack Básico.png";
+                foto.alt = "Pack Básico";
+                break;
+            case "vip":
+                foto.src = "./modelos/vip.png";
+                foto.alt = "Pack VIP";
+                break;
+            case "custom":
+                foto.src = "./modelos/custom.png";
+                foto.alt = "Customiza tu Pack";
+                break;
+            case "pagina0":
+                foto.src = "./material/vinilos.png"
+                foto.alt = "elige";
+                break;    
+            default:
+                foto.src = "./material/vinilos.png"
+                foto.alt = "elige";
+        }
+    }
+
+    function cambiarDescripcion(opcion) {
+        const descripcion = document.getElementById("descripcion");
+        let texto = "";
+        let precio = "";
+
+        switch (opcion) {
+            
+            case "basico":
+                texto = "Set técnico indispensable para cualquier evento, potencia de 3000W y Subwofer. Tanto en exteriores como en local, tu sesión será inolvidable para cuatrocientas personas.";
+                texto += " Técnico de sonido más DJ profesional, Mesa de Sonido Beringher X32 Compact Mesa Reloop RMX60, 2 CDJ Gemini 650, 2 XDJ Pioneer, Máquina de humo Toman, Luces 2 Stairville CLB 2.4, Altavoces 2 Yamaha DXR 15, Electro-Voice ZLX G2, Subwoofer EV EKX-18SP.";
+                precio = "€400";
+                break;
+            case "vip":
+                texto = "Si lo que deseas es un evento exclusivo, este es tu pack. Equipo profesional de alta gama para eventos de hasta 400 personas. Haremos de tu fiesta un evento único e inolvidable. Nuestros Dj´s se pondrán en contacto contigo para hacer una selección previa del material que podrás escuchar con el sonido de los mejores vinilos en calidad Hi-fi.";
+                texto += " Técnico de sonido más DJ profesional, Mesa Reloop RMX60, 2 CDJ Gemini 650, 2 XDJ Pioneer, Máquina de humo Toman, Luces 2 Stairville CLB 2.4, Altavoces 2 Yamaha DXR 15, Electro-Voice ZLX G2, Subwoofer EV EKX-18SP.";
+                precio = "€500";
+                break;
+            case "custom":
+                texto = "Personaliza tu pack con los mejores equipos y servicios para adaptarlo a tus necesidades. Pulsa el botón de contacto, escribenos y te ayudaremos a configurar el equipo perfecto para ti.";
+                precio = "Variable";
+                break;
+            case"pagina0":
+                texto = "Por favor, selecciona un pack para ver la descripción.";
+                break;    
+            default:
+                texto = "Selecciona un pack para ver la descripción.";
+                
+        }
+
+        // Actualizar el contenido del contenedor de descripción
+        descripcion.innerHTML = `<p>${texto}</p><p style="font-size: 0.5em; font-weight: bold;">Precio: ${precio}</p>`;
+
+        // Actualizar el pedido actual
+        pedidoActual = `${opcion.charAt(0).toUpperCase() + opcion.slice(1)} - ${precio}`;
+    }
+    document.getElementById("btn-seleccionar-pack").addEventListener("click", function () {
+    const packs = document.getElementById("packs");
+    const opcionSeleccionada = packs.value;
+
+    let nombrePack = "";
+    let precioPack = "";
+
+    // Determina el nombre y el precio del pack seleccionado
+    switch (opcionSeleccionada) {
+        case "basico":
+            nombrePack = "Pack Básico";
+            precioPack = "€400";
+            break;
+        case "vip":
+            nombrePack = "Pack VIP";
+            precioPack = "€500";
+            break;
+        case "custom":
+            nombrePack = "Customiza tu Pack";
+            precioPack = "Variable";
+            break;
+        default:
+            alert("Por favor, selecciona un pack válido.");
+            return;
+    }
+
+    // Actualiza el contenido del modal
+    document.getElementById("nombre-pack").textContent = `Nombre: ${nombrePack}`;
+    document.getElementById("precio-pack").textContent = `Precio: ${precioPack}`;
+
+    // Muestra el modal
+    const modal = document.getElementById("modal-pack");
+    modal.classList.remove("oculto");
+    modal.style.display = "flex";
+});
+
+// Ocultar el modal al pulsar el botón de cerrar
+document.getElementById("cerrar-modal-pack").addEventListener("click", function () {
+    const modal = document.getElementById("modal-pack");
+    modal.classList.add("oculto");
+    modal.style.display = "none";
+});
+
+// Ocultar el modal al hacer clic fuera del contenido
+document.getElementById("modal-pack").addEventListener("click", function (e) {
+    if (e.target === this) {
+        this.classList.add("oculto");
+        this.style.display = "none";
+    }
+});
+// Ocultar el modal al pulsar el botón de cerrar
+document.getElementById("cerrar-modal-pack").addEventListener("click", function () {
+    const modal = document.getElementById("modal-pack");
+    modal.classList.add("oculto");
+    modal.style.display = "none";
+});
+
+// Ocultar el modal al hacer clic fuera del contenido
+document.getElementById("modal-pack").addEventListener("click", function (e) {
+    if (e.target === this) {
+        this.classList.add("oculto");
+        this.style.display = "none";
+    }
+});
+</script>
+<script>
+    let pedidoActual = ""; // Variable para almacenar el pedido actual
+
+    // Actualizar el pedido al seleccionar un pack
+    function actualizarPedido(opcion) {
+        const descripcion = document.getElementById("descripcion");
+        const pedidoLista = document.getElementById("pedido-items");
+        const ventanaPedido = document.getElementById("pedido-lista");
+        const foto = document.getElementById("foto");
+
+        let texto = "";
+        let precio = "";
+
+        // Cambia el texto, precio y foto según la opción seleccionada
+        switch (opcion) {
+            case "basico":
+                texto = "Set técnico indispensable para cualquier evento, potencia de 3000W y Subwofer. Tanto en exteriores como en local, tu sesión será inolvidable para cuatrocientas personas.";
+                texto += " Técnico de sonido más DJ profesional, Mesa de Sonido Beringher X32 Compact Mesa Reloop RMX60, 2 CDJ Gemini 650, 2 XDJ Pioneer, Máquina de humo Toman, Luces 2 Stairville CLB 2.4, Altavoces 2 Yamaha DXR 15, Electro-Voice ZLX G2, Subwoofer EV EKX-18SP.";
+                precio = "€400";
+                foto.src = "./modelos/Pack Básico.png";
+                foto.alt = "Pack Básico";
+                break;
+            case "vip":
+                texto = "Si lo que deseas es un evento exclusivo, este es tu pack. Equipo profesional de alta gama para eventos de hasta 400 personas. Haremos de tu fiesta un evento único e inolvidable. Nuestros Dj´s se pondrán en contacto contigo para hacer una selección previa del material que podrás escuchar con el sonido de los mejores vinilos en calidad Hi-fi.";
+                texto += " Técnico de sonido más DJ profesional, Mesa Beringher X32 Compact, Platos Profesionales Pioner plx 500 Stanton st 100 Máquina de humo Toman, Luces 2 Stairville CLB 2.4, Altavoces 2 Yamaha DXR 15, Electro-Voice ZLX G2, Subwoofer EV EKX-18SP.";
+                precio = "€500";
+                foto.src = "./modelos/vip.png";
+                foto.alt = "Pack VIP";
+                break;
+            case "custom":
+                texto = "Personaliza tu pack con los mejores equipos y servicios para adaptarlo a tus necesidades. Pulsa el botón de contacto, escribe o llámanos y te ayudaremos a configurar el equipo perfecto para ti...";
+                precio = "Variable";
+                foto.src = "./modelos/custom.png";
+                foto.alt = "Customiza tu Pack";
+                break;
+            default:
+                texto = "Selecciona un pack para ver la descripción.";
+                precio = "";
+                foto.src = "./material/vinilos.png";
+                foto.alt = "Pack Básico";
+        }
+
+        // Actualizar el contenido del contenedor de descripción
+        descripcion.innerHTML = `<p>${texto}</p><p style="font-size: 1.5em; font-weight: bold;">Precio: ${precio}</p>`;
+
+    
+    }
+
+    // Mostrar el modal al pulsar el botón "Contacto"
+    document.getElementById("btn-contacto").addEventListener("click", function () {
+        const modal = document.getElementById("contacto-modal");
+        modal.classList.remove("oculto");
+        modal.style.display = "flex"; // Cambia el display para mostrar el modal
+    });
+
+    // Ocultar el modal al pulsar el botón de cerrar
+    document.getElementById("close-contacto").addEventListener("click", function () {
+        const modal = document.getElementById("contacto-modal");
+        modal.classList.add("oculto");
+        modal.style.display = "none"; // Cambia el display para ocultar el modal
+    });
+
+    // Ocultar el modal al hacer clic fuera del contenido
+    document.getElementById("contacto-modal").addEventListener("click", function (e) {
+        if (e.target === this) {
+            this.classList.add("oculto");
+            this.style.display = "none";
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const packs = document.getElementById("packs");
+        const descripcion = document.getElementById("descripcion");
+
+        // Establecer el valor inicial del desplegable
+        packs.value = "pagina0";
+
+        // Actualizar la descripción para el valor "pagina0"
+        descripcion.innerHTML = `<p>Por favor, selecciona un pack para ver la descripción.</p>`;
+    });
+
+               //ENVIO DEL MAAAAAAAAAAILLLLLLLL
+ function sendMail() {
+    const nombre = document.querySelector("#nombre").value.trim();
+    const email = document.querySelector("#email").value.trim();
+    const telefono = document.querySelector("#telefono").value.trim();
+    const nombrePack = document.getElementById("nombre-pack").textContent;
+    const precioPack = document.getElementById("precio-pack").textContent;
+
+    // Validación de campos
+    if (!nombre || !email || !telefono || !nombrePack || !precioPack) {
+        alert("Por favor, complete todos los campos y asegúrese de que el carrito no esté vacío.");
+        return;
+    }
+
+    // Parámetros para EmailJS
+    const templateParams = {
+        nombre: nombre,
+        email: email,
+        telefono: telefono,
+        nombrePack: nombrePack,
+        precioPack: precioPack};
+
+    // Envío del correo con EmailJS
+    emailjs
+        .send("service_pq40us8", "template_dfnraqj", templateParams)
+        .then(() => {
+            alert("Presupuesto enviado correctamente, en breves nos pondremos en contacto con usted.");
+            // Limpia el formulario después del envío
+            document.getElementById("form-pedido").reset();
+        })
+        
+    }
+
+
+
+    
+
+
+    
+    
+</script>
+
+</body>
+</html>
+```
