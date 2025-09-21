@@ -5,14 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alquiler Material Audiovisual</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-    <script>
-        (function() {
-            emailjs.init("vx8L-z5rNQzE-usNx"); // Reemplaza "your_user_id" con tu User ID de EmailJS esto es en el account de Emailjs, pulsas tu nombre, general, api keys y public key
-            
+    <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+        </script>
+        <script type="text/javascript">
+        (function(){
+        emailjs.init({
+            publicKey: "vx8L-z5rNQzE-usNx",
+        });
         })();
-    </script>
+        </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="./fotos/alquiler logo.png" type="image/png" >
     <style>
         .section {
             scroll-margin-top: 100px;
@@ -55,6 +60,9 @@
         .active-section::after {
             width: 100%;
         }
+         nav, h1, h2, h3, .nav-link, #buscador-equipos, #carrito-header {
+            font-family: 'DepartureMono', monospace;
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-sans">
@@ -66,7 +74,6 @@
                     <i class="fas fa-film text-3xl text-blue-500 mr-3"></i>
                     <h1 class="text-2xl font-bold text-gray-800">Alquiler Material Audiovisual</h1>
                 </div>
-                
                 <!-- Buscador -->
                 <div class="relative w-full md:w-64 mb-4 md:mb-0">
                     <input type="text" id="buscador-equipos" placeholder="Buscar equipos..." class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -78,7 +85,9 @@
                     <a href="#audio" class="nav-link px-2 py-1 text-gray-700 hover:text-blue-500 transition duration-300">Audio</a>
                     <a href="#video" class="nav-link px-2 py-1 text-gray-700 hover:text-blue-500 transition duration-300">Vídeo</a>
                     <a href="#emision" class="nav-link px-2 py-1 text-gray-700 hover:text-blue-500 transition duration-300">Emisión</a>
+                    <a href="./web-propia-dj/djindex.html" class="nav-link px-2 py-1 text-gray-700 hover:text-blue-500 transition duration-300">Servicio DJ</a>
                     <a href="#" id="contacto-link" class="nav-link px-2 py-1 text-gray-700 hover:text-blue-500 transition duration-300">Contacto</a>
+                    
                 </nav>
 
                 <div class="flex items-center space-x-4">
@@ -109,8 +118,8 @@
     <!-- Modal Contacto -->
     <div id="contacto-modal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center">
         <div class="bg-white rounded-lg shadow-lg p-6 w-80 text-center">
-            <p class="text-gray-700 text-sm mb-4">Si necesita atención personalizada para su evento, nosotros le diseñamos el presupuesto.</p>
-            <p class="text-gray-700 text-sm">Póngase en contacto a través del nº de tfno <strong>+34660222932</strong> o el email: <strong>boniyoacpm@gmail.com</strong></p>
+            <p class="text-gray-700 text-sm mb-4">Si necesita atención personalizada para su evento audiovisual, nosotros le diseñamos el presupuesto. </p>
+            <p class="text-gray-700 text-sm">Póngase en contacto a través del nº de tfno <strong>+34 615202831</strong> o el email: <strong>jyyym@live.com</strong></p>
             <button id="close-contacto-modal" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">Cerrar</button>
         </div>
     </div>
@@ -121,29 +130,22 @@
             <button id="cerrar-modal-enviar" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-xl">&times;</button>
             <h4 class="font-bold text-lg mb-4 text-blue-700">Resumen del Presupuesto</h4>
             <ul id="resumen-list" class="mb-4 text-sm"></ul>
-            <form id="form-contacto" class="space-y-4" action="https://formsubmit.co/boniyoacpm@gmail.com" method="POST">
-                <!-- Hidden input for FormSubmit to redirect after submission -->
-                <input type="hidden" name="_next" value="https://formsubmit.co/thank-you">
-                <input type="hidden" name="_subject" value="Nuevo presupuesto de alquiler">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" id="carrito-data" name="carrito" value="">
-                
+            <form>
                 <div>
                     <label for="nombre" class="block text-sm font-bold text-gray-700">Nombre:</label>
                     <input type="text" id="nombre" name="nombre" class="w-full px-3 py-2 border rounded-lg" required>
-                    <p id="error-nombre" class="text-red-500 text-xs mt-1 hidden">Por favor, rellene este campo.</p>
+                    
                 </div>
                 <div>
                     <label for="email" class="block text-sm font-bold text-gray-700">Email:</label>
                     <input type="email" id="email" name="email" class="w-full px-3 py-2 border rounded-lg" required>
-                    <p id="error-email" class="text-red-500 text-xs mt-1 hidden">Por favor, rellene este campo.</p>
+                    
                 </div>
                 <div>
                     <label for="telefono" class="block text-sm font-bold text-gray-700">Teléfono:</label>
                     <input type="tel" id="telefono" name="telefono" class="w-full px-3 py-2 border rounded-lg" required>
-                    <p id="error-telefono" class="text-red-500 text-xs mt-1 hidden">Por favor, rellene este campo.</p>
                 </div>
-                <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-bold">Enviar</button>
+                <button type="button" class="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-bold" onclick="sendMail()">Enviar</button>
             </form>
             <p class="mt-4 text-sm text-gray-600 text-center">En breves nos pondremos en contacto con usted, gracias por confiar en nosotros.</p>
         </div>
@@ -152,16 +154,16 @@
     <!-- Hero Section -->
     <section class="bg-blue-400 text-white py-20">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-4xl md:text-5xl font-bold mb-6">Equipos profesionales para tus proyectos</h2>
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">Equipos Profesionales para tus Proyectos</h2>
             <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-                Solicita tu presupuesto <span id="solicitar-presupuesto" class="underline text-blue-800 cursor-pointer hover:text-blue-700">aquí</span>
+                Contacta con nostros <span id="solicitar-presupuesto" class="underline text-blue-800 cursor-pointer hover:text-blue-700">aquí</span> y haremos realidad tu  <strong>Evento Audiovisual</strong>
             </p>
             <script>
                 document.getElementById('solicitar-presupuesto').addEventListener('click', function() {
                     document.getElementById('contacto-modal').classList.remove('hidden');
                 });
             </script>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <div class="flex flex-col sm:flex-row justify-center gap-4 DepartureMono monospace ">
                 <a href="#audio" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
                     <i class="fas fa-microphone mr-2"></i> Alquiler Audio
                 </a>
@@ -171,7 +173,11 @@
                 <a href="#emision" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
                     <i class="fas fa-satellite-dish mr-2"></i> Alquiler Emisión
                 </a>
+                <a href="./web-propia-dj/djindex.html" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                    <i class="fas fa-compact-disc mr-2"></i> Servicio DJ
+                </a>
             </div>
+            
         </div>
     </section>
 
@@ -251,6 +257,7 @@
                     <div class="p-6">
                         <h3 class="text-xl font-bold text-gray-800 mb-2">Mezcladora Digital Behringer X32 Compact</h3>
                         <p class="text-gray-600 mb-4 text-justify">Consola digital profesional con 32 entradas, 16 salidas 16 preamplificadores MIDAS, 17 faders motorizados y hasta 40 canales de mezcla. Ideal para directos, grabaciones y eventos complejos. Incluye efectos integrados y control remoto vía tablet o PC.</p>
+                        
                         <div class="flex justify-between items-center mt-auto">
                             <span class="text-blue-600 font-bold">€80/día</span>
                             <button data-alquilar data-max-unidades="1" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
@@ -268,7 +275,7 @@
                                     onmouseout="this.src='./fotos/jorge/zoom-f-8n-pro-A.webp'">
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Zoom F-8N Pro Grabador de Campo Multipista</h3>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Mezcladora Grabador Multipista Zoom F-8N Pro </h3>
                         <p class="text-gray-600 mb-4 text-justify"> Grabadora y mezclador de campo multipista profesional: 8 entradas combo XLR/TRS, 10 pistas, grabación en 32 bits en coma flotante hasta 192 kHz, con Time Code preciso, alimentación versátil (pilas, DC o AC) y control remoto vía app móvil. Ideal para cine, entrevistas, música o documentales. </p>
                         <div class="flex justify-between items-center mt-auto">
                             <span class="text-blue-600 font-bold">€70/día</span>
@@ -434,7 +441,7 @@
                         <p class="text-gray-600 mb-4 text-justify">Antenas activas de alta ganancia que mejoran la recepción de sistemas inalámbricos, reduciendo interferencias y aumentando la estabilidad de la señal. Diseñadas para optimizar el alcance en entornos con mucho tráfico de radiofrecuencia, ofrecen control de nivel de ganancia y fácil integración con sistemas inalámbricos profesionales de Sennheiser.Disponemos de dos Boosters de antenas Sennheiser y un conjunto de tres palas dos direccionales y una omnidireccional. </p>
                         <div class="flex justify-between items-center mt-auto">
                 <!-- cambia el precio aquí -->
-                            <span class="text-blue-600 font-bold">€???/día</span>
+                            <span class="text-blue-600 font-bold">€45/día</span>
                 <!-- cambia el data-max-unidades a la cantidad máxima que tengas de ese equipo -->
                             <button data-alquilar data-max-unidades="3" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
                                 <i class="fas fa-shopping-cart mr-2"></i> Alquilar
@@ -731,18 +738,18 @@
                 <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
                     <div class="h-48 bg-gray-100 flex items-center justify-center">
                         <!-- tienes q cambiar la foto y el alt -->
-                        <img src="./fotos/jorge/AAAA.jpg" alt="Audiotechnica" class="h-full object-contain"
-                             onmouseover="this.src='./fotos/jorge/BBB.jpg'"
-                             onmouseout="this.src='./fotos/jorge/AAA.jpg'">
+                        <img src="./fotos/jorge/audiotechA.webp" alt="Audiotechnica" class="h-full object-contain"
+                             onmouseover="this.src='./fotos/jorge/audiotechB.webp'"
+                             onmouseout="this.src='./fotos/jorge/audiotechA.webp'">
                     </div>
                     <div class="p-6">
                          <!-- te toca cambiar el nombre del equipo (en el H3) con la descripción al principio para que funcione con el buscador -->
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Auriculares Audiotechnica</h3>
-                        <p class="text-gray-600 mb-4 text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe nisi nihil excepturi cumque quia quidem aliquid ipsam similique dignissimos dicta quos perferendis, consectetur atque ad iste porro incidunt corrupti eum.
-                        Rerum optio quo aspernatur tempore architecto ipsa in ducimus vitae similique iusto maxime minus qui fugiat vel labore eius eligendi, facilis error quis perspiciatis velit nisi, corrupti dicta! Aliquam, quod.</p>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Auriculares Audio-Technica ATH-M50x
+                        </h3>
+                        <p class="text-gray-600 mb-4 text-justify">Auriculares cerrados de alta calidad para estudio y monitorización: transductores de 45 mm que ofrecen graves profundos, medios claros y agudos detallados. Diseñados para comodidad prolongada —diadema acolchada, almohadillas suaves— y cables desmontables. Excelente para grabaciones, mezcla, sesiones largas y DJ.</p>
                         <div class="flex justify-between items-center mt-auto">
                 <!-- cambia el precio aquí -->
-                            <span class="text-blue-600 font-bold">€40/día</span>
+                            <span class="text-blue-600 font-bold">€20/día</span>
                 <!-- cambia el data-max-unidades a la cantidad máxima que tengas de ese equipo -->
                             <button data-alquilar data-max-unidades="2" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
                                 <i class="fas fa-shopping-cart mr-2"></i> Alquilar
@@ -859,17 +866,17 @@
                 <div class="equipment-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
                     <div class="h-48 bg-gray-100 flex items-center justify-center">
                         <!-- tienes q cambiar la foto y el alt -->
-                        <img src="./fotos/jorge/AAAA.jpg" alt="Proyector 5000 Lumens" class="h-full object-contain"
-                             onmouseover="this.src='./fotos/jorge/BBB.jpg'"
-                             onmouseout="this.src="./fotos/jorge/AAA.jpg'">
+                        <img src="./fotos/jorge/PANAA.jpg" alt="Proyector 5000 Lumens" class="h-full object-contain"
+                             onmouseover="this.src='./fotos/jorge/PANAB.jpg'"
+                             onmouseout="this.src='./fotos/jorge/PANAA.jpg'">
                     </div>
                     <div class="p-6">
                         <!-- te toca cambiar el nombre del equipo (en el H3) con la descripción al principio para que funcione con el buscador -->
                         <h3 class="text-xl font-bold text-gray-800 mb-2">Proyector Panasonic 5000 Lumens</h3>
-                        <p class="text-gray-600 mb-4 text-justify">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Harum recusandae corporis dolore atque omnis ad quas quisquam quia mollitia, temporibus commodi doloribus incidunt, aperiam nisi odio architecto fuga nulla explicabo.</p>
+                        <p class="text-gray-600 mb-4 text-justify">Proyector láser profesional de 5.200 lúmenes (WUXGA), ideal para salas luminosas. Ligero y compacto (~6,5 kg), con zoom óptico 1,6×, corrección de pantalla en 6 puntos y óptica que permite ajustes horizontales y verticales. Perfecto para presentaciones, eventos corporativos o conferencias donde se requiere calidad y versatilidad.</p>
                         <div class="flex justify-between items-center mt-auto">
                             <!-- cambia el precio aquí -->
-                            <span class="text-blue-600 font-bold">€70/día</span>
+                            <span class="text-blue-600 font-bold">€35/día</span>
                             <!-- cambia el data-max-unidades a la cantidad máxima que tengas de ese equipo -->
                             <button data-alquilar data-max-unidades="2" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
                                 <i class="fas fa-shopping-cart mr-2"></i> Alquilar
@@ -975,7 +982,7 @@
                             <!-- cambia el precio aquí -->
                             <span class="text-blue-600 font-bold">€25/día</span>
                             <!-- cambia el data-max-unidades a la cantidad máxima que tengas de ese equipo -->
-                            <button data-alquilar data-max-unidades="1" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                            <button data-alquilar data-max-unidades="4" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
                                 <i class="fas fa-shopping-cart mr-2"></i> Alquilar
                             </button>
                         </div>
@@ -1089,7 +1096,7 @@
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold text-gray-800 mb-2">Workstation Ryzen </h3>
-                        <p class="text-gray-600 mb-4 text-justify">WorkStation de alto rendimiento, customizado para garantizar cualquier emisión y producción Multicámara. Intel(R) Core(TM) i9, 64mb RAM, Grafica NVIDIA GEFORCE RTX 3080 12gb</p>
+                        <p class="text-gray-600 mb-4 text-justify">WorkStation de alto rendimiento, customizado para garantizar cualquier emisión y producción Multicámara. Intel(R) Core(TM) i9, 64mb RAM, Grafica NVIDIA GEFORCE RTX 3080 12gb. Puerto de Ethernet 2,5gb preparado para transmisión óptima de fuentes NDI.</p>
                         <div class="flex justify-between items-center mt-auto">
                             <span class="text-blue-600 font-bold">€120/día</span>
                             <button data-alquilar data-max-unidades="1"  class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
@@ -1124,7 +1131,7 @@
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold text-gray-800 mb-2">ESI MAYA44ex</h3>
-                        <p class="text-gray-600 mb-4 text-justify">Interfaz de audio PCIe con 2 entradas y 2 salidas analógicas, convertidores A/D y D/A a 24 bits/96 kHz con rango dinámico de hasta 108 dB. Incorpora preamplificador de micrófono con phantom de +48 V, entrada Hi‑Z para instrumentos y conexión óptica S/PDIF. Compatible con ASIO, DirectWIRE y DirectSound, ideal para grabación en estudio o producción doméstica profesiona.</p>
+                        <p class="text-gray-600 mb-4 text-justify">Interfaz de audio PCIe con 2 entradas y 2 salidas analógicas, convertidores A/D y D/A a 24 bits/96 kHz con rango dinámico de hasta 108 dB. Incorpora preamplificador de micrófono con phantom de +48 V, entrada Hi‑Z para instrumentos y conexión óptica S/PDIF. Compatible con ASIO, DirectWIRE y DirectSound, ideal para grabación en estudio o producción doméstica profesional.</p>
                         <div class="flex justify-between items-center mt-auto">
                             <span class="text-blue-600 font-bold">€20/día</span>
                             <button data-alquilar data-max-unidades="1"  class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
@@ -1259,322 +1266,11 @@
                 <i class="fas fa-satellite-dish mr-2"></i> Alquiler Emisión
             </a>
         </div>
+        
+
     </section>
+<script src="./script.js"></script>
 
-    <script>
-// Buscador de equipos
-// Función para normalizar texto (quita acentos y pasa a minúsculas)
-function normalizarTexto(txt) {
-    return txt.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-}
-document.getElementById('buscador-equipos').addEventListener('input', function() {
-    const valor = normalizarTexto(this.value.trim());
-    document.querySelectorAll('.equipment-card').forEach(card => {
-        const nombre = normalizarTexto(card.querySelector('h3')?.textContent || '');
-        const descripcion = normalizarTexto(card.querySelector('p')?.textContent || '');
-        if (nombre.includes(valor) || descripcion.includes(valor)) {
-            card.style.display = '';
-        } else {
-            card.style.display = 'none';
-        }
-    });
-});
-let carrito = [];
-let total = 0;
 
-// Mostrar/ocultar el carrito desplegable
-document.getElementById('carrito-btn').addEventListener('click', () => {
-    document.getElementById('carrito-dropdown').classList.toggle('hidden');
-});
-
-// Cierra el modal de alquilar
-function cerrarModalAlquilar() {
-    const modal = document.getElementById('modal-alquilar');
-    if (modal) modal.remove();
-}
-
-// Actualiza el listado del carrito y el total
-function actualizarCarrito() {
-    // Actualizar contador (total de unidades)
-    const totalUnidades = carrito.reduce((acc, item) => acc + item.unidades, 0);
-    document.getElementById('carrito-count').textContent = totalUnidades;
-    document.getElementById('carrito-total').textContent = `€${total.toFixed(2)}`;
-    document.getElementById('carrito-total2').textContent = `€${total.toFixed(2)}`;
-
-    // Actualizar listado del carrito
-    const lista = document.getElementById('carrito-list');
-    lista.innerHTML = '';
-    carrito.forEach((item, idx) => {
-        const li = document.createElement('li');
-        li.className = "flex flex-col mb-1 border-b pb-1 px-1";
-        li.innerHTML = `
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-                <span><strong>${item.unidades} unidad${item.unidades>1?'es':''}</strong> de ${item.nombre} <strong>(${item.dias} día${item.dias>1?'s':''})</strong> -<em> €${(item.precio*item.unidades*item.dias).toFixed(2)}</em></span>
-                <div class="flex items-center">
-                    <button class="ml-2 text-blue-500 hover:text-blue-700 px-2 py-0.5 rounded" data-editar="${idx}" title="Editar">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="ml-2 text-red-500 hover:text-red-700 px-2 py-0.5 rounded" data-eliminar="${idx}" title="Eliminar">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="hidden mt-2 w-full" id="editar-form-${idx}"></div>
-        `;
-        lista.appendChild(li);
-    });
-
-    // Funcionalidad eliminar
-    lista.querySelectorAll('button[data-eliminar]').forEach(btn => {
-        btn.onclick = function() {
-            const idx = parseInt(btn.getAttribute('data-eliminar'));
-            total -= carrito[idx].precio * carrito[idx].unidades * carrito[idx].dias;
-            carrito.splice(idx, 1);
-            actualizarCarrito();
-        };
-    });
-
-    // Funcionalidad editar
-    lista.querySelectorAll('button[data-editar]').forEach(btn => {
-        btn.onclick = function() {
-            const idx = parseInt(btn.getAttribute('data-editar'));
-            const item = carrito[idx];
-            const formDiv = lista.querySelector(`#editar-form-${idx}`);
-            if (!formDiv) return;
-            // Obtener el máximo de unidades del producto
-            let maxUnidades = 10;
-            // Buscar el card original para obtener data-max-unidades
-            const card = Array.from(document.querySelectorAll('.equipment-card')).find(c => c.querySelector('h3').textContent === item.nombre);
-            if (card) {
-                const alquilarBtn = card.querySelector('[data-alquilar]');
-                if (alquilarBtn) {
-                    maxUnidades = parseInt(alquilarBtn.getAttribute('data-max-unidades')) || 2;
-                }
-            }
-            // Opciones de unidades
-            let opcionesUnidades = '';
-            for(let i=1; i<=maxUnidades; i++) {
-                opcionesUnidades += `<option value="${i}" ${i===item.unidades?'selected':''}>${i}</option>`;
-            }
-            // Opciones de días (1-30)
-            let opcionesDias = '';
-            for(let d=1; d<=30; d++) {
-                opcionesDias += `<option value="${d}" ${d===item.dias?'selected':''}>${d}</option>`;
-            }
-            formDiv.innerHTML = `
-                <form class="flex flex-col sm:flex-row gap-2 items-start sm:items-center w-full">
-                    <label class="text-sm font-semibold flex flex-col sm:flex-row items-start sm:items-center">Unidades:
-                        <select name="unidades" class="ml-0 sm:ml-1 px-2 py-1 border rounded">${opcionesUnidades}</select>
-                    </label>
-                    <label class="text-sm font-semibold flex flex-col sm:flex-row items-start sm:items-center">Días:
-                        <select name="dias" class="ml-0 sm:ml-1 px-2 py-1 border rounded">${opcionesDias}</select>
-                    </label>
-                    <div class="flex gap-2 mt-2 sm:mt-0">
-                        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded font-bold">Guardar</button>
-                        <button type="button" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-2 py-1 rounded font-bold" id="cancelar-editar-${idx}">Cancelar</button>
-                    </div>
-                </form>
-            `;
-            formDiv.classList.remove('hidden');
-
-            // Cancelar edición
-            formDiv.querySelector(`#cancelar-editar-${idx}`).onclick = function() {
-                formDiv.classList.add('hidden');
-            };
-
-            // Guardar cambios
-            formDiv.querySelector('form').onsubmit = function(ev) {
-                ev.preventDefault();
-                const nuevasUnidades = parseInt(formDiv.querySelector('select[name="unidades"]').value);
-                const nuevosDias = parseInt(formDiv.querySelector('select[name="dias"]').value);
-                // Si hay otro item igual, lo fusiona
-                const nombre = item.nombre;
-                const precio = item.precio;
-                const idxExistente = carrito.findIndex((it, i) => it.nombre === nombre && it.unidades === nuevasUnidades && i !== idx);
-                // Restar el total anterior
-                total -= item.precio * item.unidades * item.dias;
-                if (idxExistente !== -1) {
-                    // Fusionar: sumar días si se quiere, o solo actualizar
-                    carrito[idxExistente].dias = nuevosDias;
-                    // Eliminar el actual
-                    carrito.splice(idx, 1);
-                } else {
-                    item.unidades = nuevasUnidades;
-                    item.dias = nuevosDias;
-                }
-                // Sumar el nuevo total
-                total += precio * nuevasUnidades * nuevosDias;
-                actualizarCarrito();
-            };
-        };
-    });
-}
-
-// Añadir funcionalidad a todos los botones "Alquilar"
-document.querySelectorAll('[data-alquilar]').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        cerrarModalAlquilar();
-
-        // Obtener el máximo de unidades para este equipo
-        const maxUnidades = parseInt(btn.getAttribute('data-max-unidades')) || 2;
-        // Crear opciones dinámicamente
-        let opcionesUnidades = '';
-        for(let i=1; i<=maxUnidades; i++) {
-            opcionesUnidades += `<option value="${i}">${i}</option>`;
-        }
-        // Crear modal
-        const modal = document.createElement('div');
-        modal.id = 'modal-alquilar';
-        modal.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40';
-        modal.innerHTML = `
-            <div class="bg-white rounded-xl shadow-2xl p-6 min-w-[280px] max-w-xs mx-auto flex flex-col space-y-4 relative">
-                <button id="cerrar-modal-alquilar" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-xl">&times;</button>
-                <h4 class="font-bold text-lg mb-2 text-blue-700">Alquilar equipo</h4>
-                <label class="text-sm font-semibold flex items-center">Unidades:
-                    <select id="unidades" class="ml-2 px-2 py-1 border rounded">
-                        ${opcionesUnidades}
-                    </select>
-                </label>
-                <label class="text-sm font-semibold flex items-center">Días:
-                    <input type="number" min="1" value="1" id="dias" class="ml-2 w-16 px-2 py-1 border rounded" />
-                </label>
-                <button type="button" id="añadir-alquilar" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded font-bold">Añadir al carrito</button>
-            </div>
-        `;
-        document.body.appendChild(modal);
-
-        // Cerrar modal al pulsar la X o fuera del modal
-        modal.querySelector('#cerrar-modal-alquilar').onclick = cerrarModalAlquilar;
-        modal.onclick = function(ev) {
-            if (ev.target === modal) cerrarModalAlquilar();
-        };
-
-        // Añadir al carrito al pulsar "Añadir"
-        modal.querySelector('#añadir-alquilar').onclick = function() {
-            const unidades = parseInt(modal.querySelector('#unidades').value);
-            const dias = parseInt(modal.querySelector('#dias').value);
-
-            // Obtener datos del producto
-            const card = btn.closest('.equipment-card');
-            const nombre = card.querySelector('h3').textContent;
-            const precioTexto = card.querySelector('span.text-blue-600').textContent;
-            const precio = parseFloat(precioTexto.replace('€','').replace('/día','').replace(',','.'));
-
-            // Buscar si ya existe el mismo producto con las mismas unidades
-            const idxExistente = carrito.findIndex(item => item.nombre === nombre && item.unidades === unidades);
-            if (idxExistente !== -1) {
-                // Restar el total anterior
-                total -= carrito[idxExistente].precio * carrito[idxExistente].unidades * carrito[idxExistente].dias;
-                // Actualizar días y precio
-                carrito[idxExistente].dias = dias;
-                carrito[idxExistente].precio = precio;
-                // Sumar el nuevo total
-                total += precio * unidades * dias;
-            } else {
-                // Añadir al carrito
-                carrito.push({ nombre, precio, unidades, dias });
-                total += precio * unidades * dias;
-            }
-
-            actualizarCarrito();
-
-            // Cerrar modal
-            cerrarModalAlquilar();
-        };
-    });
-});
-
-// Ocultar el carrito si se hace clic fuera de la zona del carrito
-document.addEventListener('mousedown', function(event) {
-    const carritoHeader = document.getElementById('carrito-header');
-    const carritoDropdown = document.getElementById('carrito-dropdown');
-    if (!carritoHeader.contains(event.target)) {
-        carritoDropdown.classList.add('hidden');
-    }
-});
-
-// Mostrar el modal de contacto
-document.getElementById('contacto-link').addEventListener('click', function(e) {
-    e.preventDefault();
-    document.getElementById('contacto-modal').classList.remove('hidden');
-});
-
-// Cerrar el modal de contacto
-document.getElementById('close-contacto-modal').addEventListener('click', function() {
-    document.getElementById('contacto-modal').classList.add('hidden');
-});
-
-// Cerrar el modal al hacer clic fuera de la ventana
-document.getElementById('contacto-modal').addEventListener('click', function(e) {
-    if (e.target === this) {
-        this.classList.add('hidden');
-    }
-});
-
-// Enviar presupuesto
-document.getElementById('enviar-presupuesto').addEventListener('click', function() {
-    const modal = document.getElementById('modal-enviar-presupuesto');
-    const resumenList = document.getElementById('resumen-list');
-    resumenList.innerHTML = '';
-    carrito.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = `${item.unidades} unidad${item.unidades > 1 ? 'es' : ''} de ${item.nombre} (${item.dias} día${item.dias > 1 ? 's' : ''}) - €${(item.precio * item.unidades * item.dias).toFixed(2)}`;
-        resumenList.appendChild(li);
-    });
-    modal.classList.remove('hidden');
-});
-
-// Cerrar modal de enviar presupuesto
-document.getElementById('cerrar-modal-enviar').addEventListener('click', function() {
-    document.getElementById('modal-enviar-presupuesto').classList.add('hidden');
-});
-
-document.getElementById('modal-enviar-presupuesto').addEventListener('click', function(e) {
-    if (e.target === this) {
-        this.classList.add('hidden');
-    }
-});
-
-// Manejar envío del formulario de contacto con EmailJS
-document.getElementById('form-contacto').addEventListener('submit', function(e) {
-    e.preventDefault(); // Evitar el envío predeterminado del formulario
-
-    const form = this;
-    const formData = new FormData(form);
-    const data = {
-        nombre: formData.get("nombre"),
-        email: formData.get("email"),
-        telefono: formData.get("telefono"),
-        carrito: formData.get("carrito")
-    };
-
-    // Enviar a la primera cuenta
-    emailjs.send("service_pq40us8", "template_9kapt49", data)
-        .then(function(response) {
-            console.log("Formulario enviado a la primera cuenta:", response.status, response.text);
-
-            // Enviar a la segunda cuenta
-            return emailjs.send("service_w4xj7te", "template_9kapt49", data);
-        })
-        .then(function(response) {
-            console.log("Formulario enviado a la segunda cuenta:", response.status, response.text);
-            alert("Formulario enviado correctamente.");
-            form.reset(); // Limpiar el formulario después de enviarlo
-        })
-        .catch(function(error) {
-            console.error("Error al enviar el formulario:", error);
-            alert("Error al enviar el formulario. Inténtalo de nuevo.");
-        });
-});
-
-// Redirigir a una página emergente después de enviar
-window.addEventListener('load', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('success') === 'true') {
-        alert('Presupuesto enviado, nos pondremos en contacto con usted en el mayor tiempo posible. Si tiene cualquier duda, llame o escriba al +34660222932.');
-    }
-});
-</script>
 </body>
 </html>
