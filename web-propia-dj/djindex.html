@@ -16,6 +16,7 @@
         })();
         </script>
     <link rel="stylesheet" href="estilo.css">
+    <link rel="icon" href="./material/dj logo.png" type="image/png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
 <body>
@@ -113,7 +114,82 @@
 </div>
 
 <script>
+    // Llamar a cambiarDescripcion y cambiarFoto al cargar la página
+    document.addEventListener("DOMContentLoaded", function () {
+    const defaultPack = "pagina0"; // Valor predeterminado
+    cambiarFoto(defaultPack);
+    cambiarDescripcion(defaultPack);
+    });
+    
+    function cambiarFoto(opcion) {
+        const foto = document.getElementById("foto");
 
+        // Cambia el src según la opción seleccionada
+        switch (opcion) {
+            
+            case "basico":
+                foto.src = "./modelos/Pack Básico.png";
+                foto.alt = "Pack Básico";
+                break;
+            case "vip":
+                foto.src = "./modelos/vip.png";
+                foto.alt = "Pack VIP";
+                break;
+            case "custom":
+                foto.src = "./modelos/custom.png";
+                foto.alt = "Customiza tu Pack";
+                break;
+            case "pagina0":
+                foto.src = "./material/vinilos.png"
+                foto.alt = "elige";
+                break;    
+            default:
+                foto.src = "./material/vinilos.png"
+                foto.alt = "elige";
+        }
+    }
+
+    function cambiarDescripcion(opcion) {
+        const descripcion = document.getElementById("descripcion");
+        let texto = "";
+        let precio = "";
+
+        switch (opcion) {
+            
+            case "basico":
+                texto = "Set técnico indispensable para cualquier evento, potencia de 3000W y Subwofer. Tanto en exteriores como en local, tu sesión será inolvidable para cuatrocientas personas.";
+                texto += " Técnico de sonido más DJ profesional, Mesa de Sonido Beringher X32 Compact Mesa Reloop RMX60, 2 CDJ Gemini 650, 2 XDJ Pioneer, Máquina de humo Toman, Luces 2 Stairville CLB 2.4, Altavoces 2 Yamaha DXR 15, Electro-Voice ZLX G2, Subwoofer EV EKX-18SP.";
+                precio = "€400";
+                break;
+            case "vip":
+                texto = "Si lo que deseas es un evento exclusivo, este es tu pack. Equipo profesional de alta gama para eventos de hasta 400 personas. Haremos de tu fiesta un evento único e inolvidable. Nuestros Dj´s se pondrán en contacto contigo para hacer una selección previa del material que podrás escuchar con el sonido de los mejores vinilos en calidad Hi-fi.";
+                texto += " Técnico de sonido más DJ profesional, Mesa Reloop RMX60, 2 CDJ Gemini 650, 2 XDJ Pioneer, Máquina de humo Toman, Luces 2 Stairville CLB 2.4, Altavoces 2 Yamaha DXR 15, Electro-Voice ZLX G2, Subwoofer EV EKX-18SP.";
+                precio = "€500";
+                break;
+            case "custom":
+                texto = "Personaliza tu pack con los mejores equipos y servicios para adaptarlo a tus necesidades. Pulsa el botón de contacto, escribenos y te ayudaremos a configurar el equipo perfecto para ti.";
+                precio = "Variable";
+                break;
+            case"pagina0":
+                texto = "Por favor, selecciona un pack para ver la descripción.";
+                break;    
+            default:
+                texto = "Selecciona un pack para ver la descripción.";
+                
+        }
+
+        // Actualizar el contenido del contenedor de descripción
+        descripcion.innerHTML = `<p>${texto}</p><p style="font-size: 0.5em; font-weight: bold;">Precio: ${precio}</p>`;
+
+        // Actualizar el pedido actual
+        pedidoActual = `${opcion.charAt(0).toUpperCase() + opcion.slice(1)} - ${precio}`;
+    }
+    document.getElementById("btn-seleccionar-pack").addEventListener("click", function () {
+    const packs = document.getElementById("packs");
+    const opcionSeleccionada = packs.value;
+
+    let nombrePack = "";
+    let precioPack = ""; 
     // Determina el nombre y el precio del pack seleccionado
     switch (opcionSeleccionada) {
         case "basico":
@@ -141,6 +217,7 @@
     const modal = document.getElementById("modal-pack");
     modal.classList.remove("oculto");
 modal.style.display = "flex";
+});
 
 // Ocultar el modal al pulsar el botón de cerrar
 document.getElementById("cerrar-modal-pack").addEventListener("click", function () {
